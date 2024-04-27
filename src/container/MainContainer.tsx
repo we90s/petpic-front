@@ -33,7 +33,7 @@ export default function MainContainer() {
           />
         </SecondPicWrapper>
       </PictureWrapper>
-      <Button bgColor="main" textColor="white" fontSize="xl">
+      <Button $bgColor="main" $textColor="white" fontSize="xl">
         시작하기
       </Button>
     </Container>

@@ -4,7 +4,6 @@ import MainContainer from "container/MainContainer";
 export default function Main() {
   return (
     <>
-      <Header />
       <MainContainer />
     </>
   );

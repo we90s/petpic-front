@@ -1,5 +1,5 @@
-import Main from "#pages/index";
-import Theme from "#styles/Theme";
+import Header from "#components/Header";
+import type { AppProps } from "next/app";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
@@ -11,11 +11,12 @@ const GlobalStyle = createGlobalStyle`
  
 `;
 
-export default function MyApp() {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
-      <Main />
+      <Header />
+      <Component {...pageProps} />
     </>
   );
 }
