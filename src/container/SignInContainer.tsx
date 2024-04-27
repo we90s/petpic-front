@@ -1,6 +1,7 @@
 import Button from "#components/Button";
 import Input from "#components/Input";
 import theme from "#styles/Theme";
+import Link from "next/link";
 import styled from "styled-components";
 
 export default function SignInContainer() {
@@ -25,9 +26,9 @@ export default function SignInContainer() {
         />
         <SignUpAndFindPasswordBox>
           아직 회원이 아니신가요?
-          <button>회원가입</button>
+          <Link href="signUp">회원가입</Link>
           <span>|</span>
-          <button>비밀번호 찾기</button>
+          <Link href="/">비밀번호 찾기</Link>
         </SignUpAndFindPasswordBox>
         <Button type="submit" fontSize="xl" $bgColor="main" $textColor="white">
           로그인
@@ -67,11 +68,11 @@ const SignUpAndFindPasswordBox = styled.div`
   & span {
     color: ${theme.colors.line01};
   }
-  & button {
+  & a {
     background: transparent;
     border: none;
     padding: 0px 8px;
-    cursor: pointer;
     color: ${theme.colors.text02};
+    text-decoration: none;
   }
 `;
