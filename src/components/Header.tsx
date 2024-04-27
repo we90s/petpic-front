@@ -10,7 +10,7 @@ export default function Header() {
       <Link href="/">
         <LOGO />
       </Link>
-      <StyledLink href="/login">로그인</StyledLink>
+      <StyledLink href="/signIn">로그인</StyledLink>
     </Container>
   );
 }
