@@ -1,24 +1,27 @@
 import theme from "#styles/Theme";
 import { COLORS_TYPE, colors } from "colors";
-import React from "react";
 import styled from "styled-components";
 
 // 재사용 가능한 버튼 스타일 정의
 
-type ButtonType = {
+export type ButtonType = {
   children: string;
   fontSize: "md" | "xl";
   $bgColor: "main" | "white" | "bg01" | "line01";
-  $textColor: "text03" | "white";
+  $textColor: "text01" | "text03" | "white";
   fontWeight?: "500";
   padding?: string;
   type?: "submit";
+  $marginTop?: number;
+  $maxWidth?: string;
 };
 
 const StyledButton = styled.button<ButtonType>`
   padding: ${({ padding }) => padding || "20px"};
   font-size: ${({ fontSize }) => theme.fontSize[fontSize]};
-  border: none;
+  border: 1px solid
+    ${({ $textColor }) =>
+      $textColor !== "white" ? theme.colors.line01 : "transparent"};
   border-radius: 12px;
   font-weight: ${({ fontWeight }) => fontWeight || `700`};
   background-color: ${({ $bgColor }) => theme.colors[$bgColor]};
@@ -26,7 +29,8 @@ const StyledButton = styled.button<ButtonType>`
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 100%;
-
+  max-width: ${({ $maxWidth }) => $maxWidth || "100%"};
+  margin-top: ${({ $marginTop }) => $marginTop || 0}px;
   &:hover {
     opacity: 0.7;
   }
@@ -41,6 +45,8 @@ const Button = ({
   fontSize,
   fontWeight,
   padding,
+  $marginTop,
+  $maxWidth,
 }: //   onClick,
 ButtonType) => {
   return (
@@ -51,6 +57,8 @@ ButtonType) => {
       fontSize={fontSize}
       fontWeight={fontWeight}
       padding={padding}
+      $marginTop={$marginTop}
+      $maxWidth={$maxWidth}
       onSubmit={() => console.log("asdds")}
       //   hoverColor={hoverColor}
       //   onClick={onClick}

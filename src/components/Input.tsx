@@ -1,13 +1,15 @@
 import theme from "#styles/Theme";
-import React from "react";
 import styled from "styled-components";
 
 type InputType = {
   label?: string;
-  $marginTop?: number;
   type?: "text" | "password" | "email";
   errorLabel?: string;
   placeholder: string;
+};
+
+type InputContainerType = {
+  $marginTop?: number;
 };
 
 const StyledLabel = styled.label`
@@ -28,12 +30,15 @@ const StyledErrorLabel = styled.label`
   display: inline-block;
 `;
 
+const InputContainer = styled.div<InputContainerType>`
+  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : 0)}px;
+`;
+
 const StyledInput = styled.input<InputType>`
   border: 1px solid ${theme.colors.line01};
   &:focus {
     outline: 1px solid ${theme.colors.main};
   }
-  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : 0)}px;
   padding: 12px 20px;
   font-size: ${theme.fontSize.lg};
   border-radius: 8px;
@@ -51,16 +56,12 @@ export default function Input({
   $marginTop,
   errorLabel,
   placeholder,
-}: InputType) {
+}: InputType & InputContainerType) {
   return (
-    <>
+    <InputContainer $marginTop={$marginTop}>
       {label && <StyledLabel>{label}</StyledLabel>}
-      <StyledInput
-        placeholder={placeholder}
-        type={type}
-        $marginTop={$marginTop}
-      />
+      <StyledInput placeholder={placeholder} type={type} />
       {errorLabel && <StyledErrorLabel>{errorLabel}</StyledErrorLabel>}
-    </>
+    </InputContainer>
   );
 }
