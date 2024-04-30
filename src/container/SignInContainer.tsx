@@ -1,4 +1,5 @@
 import Button from "#components/Button";
+import Container from "#components/Container";
 import Input from "#components/Input";
 import theme from "#styles/Theme";
 import Link from "next/link";
@@ -6,7 +7,7 @@ import styled from "styled-components";
 
 export default function SignInContainer() {
   return (
-    <Container>
+    <Container $marginTop={46}>
       <SignInTitle>
         <span>🐶 🐾</span>
         가입하고 무료로 댕냥이 사진을 받아보세요
@@ -37,12 +38,6 @@ export default function SignInContainer() {
     </Container>
   );
 }
-
-const Container = styled.div`
-  max-width: 540px;
-  margin-left: auto;
-  margin-right: auto;
-`;
 
 const SignInTitle = styled.h1`
   margin-top: 47px;

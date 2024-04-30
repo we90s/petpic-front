@@ -1,11 +1,11 @@
 import Button from "#components/Button";
+import Container from "#components/Container";
 import Input from "#components/Input";
-import React from "react";
 import styled from "styled-components";
 
 export default function SignUpContainer() {
   return (
-    <Container>
+    <Container $marginTop={46}>
       <EmailWrapper>
         <Input type="email" label="이메일" placeholder="이메일을 입력하세요" />
         <Button
@@ -35,23 +35,12 @@ export default function SignUpContainer() {
         placeholder="비밀번호 확인"
         $marginTop={20}
       />
-      <Button fontSize="xl" $bgColor="bg01" $textColor="white">
+      <Button fontSize="xl" $bgColor="bg01" $textColor="white" $marginTop={60}>
         가입하기
       </Button>
     </Container>
   );
 }
-
-const Container = styled.div`
-  margin-top: 46px;
-  max-width: 540px;
-  margin-left: auto;
-  margin-right: auto;
-
-  & button {
-    margin-top: 60px;
-  }
-`;
 
 const EmailWrapper = styled.div`
   display: flex;

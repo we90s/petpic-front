@@ -1,5 +1,4 @@
 import theme from "#styles/Theme";
-import React from "react";
 import styled from "styled-components";
 
 type InputType = {

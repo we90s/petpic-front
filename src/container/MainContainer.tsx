@@ -5,9 +5,11 @@ import firstPic from "#assets/main-first.png";
 import secondPic from "#assets/main-second.png";
 import Button from "#components/Button";
 import theme from "#styles/Theme";
+import Container from "#components/Container";
+
 export default function MainContainer() {
   return (
-    <Container>
+    <Container $maxWidth={640}>
       <Title>댕냥이를 위한 방구석 스튜디오</Title>
       <PictureWrapper>
         <FirstPicWrapper>
@@ -39,13 +41,6 @@ export default function MainContainer() {
     </Container>
   );
 }
-
-const Container = styled.div`
-  width: fit-content;
-  margin-top: 56px;
-  margin-left: auto;
-  margin-right: auto;
-`;
 
 const Title = styled.h1`
   font-size: ${theme.fontSize.h1};
