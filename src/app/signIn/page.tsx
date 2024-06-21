@@ -1,9 +1,11 @@
+"use client";
+
 import Button from "#components/Button";
 import Input from "#components/Input";
 import Link from "next/link";
 import styles from "#styles/page/signIn.module.css";
 
-export default function SignInContainer() {
+export default function SignIn() {
   return (
     <>
       <div className={styles.h1}>

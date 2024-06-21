@@ -1,0 +1,63 @@
+.container {
+  margin-top: 102px;
+  text-align: center;
+}
+
+.container button {
+  width: 320px;
+}
+
+.icon {
+  width: 164px;
+  height: 164px;
+  border-radius: 100%;
+  background-color: var(--green);
+  margin: 0 auto;
+  position: relative;
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  background-color: var(--white);
+  width: 72px;
+  height: 13.5px;
+  border-top-right-radius: 99px;
+  border-bottom-right-radius: 99px;
+  top: 47%;
+  right: 22%;
+  transform: rotate(-45deg);
+  border-bottom-left-radius: 99px;
+}
+
+.icon::after {
+  content: "";
+  position: absolute;
+  background-color: var(--white);
+  width: 38px;
+  height: 13.5px;
+  border-top-left-radius: 99px;
+  border-bottom-left-radius: 99px;
+  top: 50%;
+  left: 22.4%;
+  transform: rotate(45deg);
+}
+
+.h1 {
+  font-size: var(--h1);
+  font-weight: 700;
+  line-height: 5rem;
+  margin: 36px 0px 12px 0px;
+}
+
+.p {
+  color: var(--text02);
+  font-size: var(--lg);
+  margin-bottom: 60px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
