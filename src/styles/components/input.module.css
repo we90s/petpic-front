@@ -1,0 +1,35 @@
+.label {
+  color: var(--text03);
+  font-size: var(--md);
+  font-weight: 700;
+  line-height: 2.1rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.errorLabel {
+  color: var(--red);
+  font-size: var(--sm);
+  margin-left: 20px;
+  margin-top: 4px;
+  line-height: 1.95rem;
+  display: inline-block;
+}
+
+.input {
+  border: 1px solid var(--line01);
+  padding: 12px 20px;
+  font-size: var(--lg);
+  border-radius: 8px;
+  color: var(--text01);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: 1px solid var(--main);
+}
+
+.input::placeholder {
+  color: var(--bg01);
+}

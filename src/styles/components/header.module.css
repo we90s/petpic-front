@@ -1,0 +1,13 @@
+.header {
+  padding: 18px 40px;
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.signIn {
+  color: #717176;
+  font-size: var(--xl);
+  text-decoration: none;
+}

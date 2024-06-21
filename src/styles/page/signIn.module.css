@@ -1,0 +1,40 @@
+.h1 {
+  margin-top: 47px;
+  font-size: var(--xxl);
+  font-weight: 700;
+  line-height: 3.2rem;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.h1 > span {
+  display: block;
+  line-height: 4.48rem;
+  font-size: var(--h1);
+  margin-bottom: 3px;
+}
+
+.subText {
+  color: var(--text03);
+  font-size: var(--md);
+  margin: 60px 0px 20px 0px;
+  text-align: center;
+}
+
+.subText > span {
+  font-size: var(--md);
+  color: var(--line01);
+}
+
+.subText > a {
+  background: transparent;
+  border: none;
+  padding: 0px 8px;
+  color: var(--text02);
+  font-size: var(--md);
+  text-decoration: none;
+}
+
+.form > div:first-child {
+  margin-bottom: 16px;
+}

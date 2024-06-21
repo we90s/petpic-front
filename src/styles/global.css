@@ -1,0 +1,147 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 62.5%;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:root {
+  --h1: 3.6rem;
+  --h2: 2.3rem;
+  --xs: 0.75rem;
+  --sm: 1.3rem;
+  --md: 1.4rem;
+  --lg: 1.6rem;
+  --xl: 1.8rem;
+  --xxl: 2.2rem;
+  --main: #3a49e6;
+  --pink: #ff5e5d;
+  --bg01: #98979f;
+  --bg02: #d9d9d9;
+  --bg03: #f8f8fa;
+  --text01: #191919;
+  --text02: #2e3338;
+  --text03: #717176;
+  --line01: #dbdbdb;
+  --white: #ffffff;
+  --black: #000000;
+  --red: #e42f1e;
+  --green: #2bc45c;
+}
