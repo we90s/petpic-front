@@ -12,11 +12,11 @@ type Props = {
 
 export default function StartLayout({ children, progress, title }: Props) {
   return (
-    <Container $textAlign="center" $marginTop={60}>
+    <>
       <ProgressBar progress={progress} />
       <Title>{title}</Title>
       {children}
-    </Container>
+    </>
   );
 }
 
