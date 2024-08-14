@@ -1,6 +1,3 @@
-import theme from "#styles/Theme";
-import React from "react";
-
 type Props = {
   progress: "first" | "second" | "third";
 };
@@ -31,8 +28,8 @@ export default function ProgressBar({ progress }: Props) {
         fill="white"
         stroke={
           progress === "first" || progress === "second" || progress === "third"
-            ? theme.colors.main
-            : theme.colors.line01
+            ? "#3A49E6"
+            : "#DBDBDB"
         }
         stroke-width="5"
       />
@@ -42,9 +39,7 @@ export default function ProgressBar({ progress }: Props) {
         r="8.5"
         fill="white"
         stroke={
-          progress === "second" || progress === "third"
-            ? theme.colors.main
-            : theme.colors.line01
+          progress === "second" || progress === "third" ? "#3A49E6" : "#DBDBDB"
         }
         stroke-width="5"
       />
@@ -53,7 +48,7 @@ export default function ProgressBar({ progress }: Props) {
         cy="11"
         r="8.5"
         fill="white"
-        stroke={progress === "third" ? theme.colors.main : theme.colors.line01}
+        stroke={progress === "third" ? "#3A49E6" : "#DBDBDB"}
         stroke-width="5"
       />
     </svg>

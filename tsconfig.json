@@ -2,11 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
     "target": "ES5",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,30 +17,14 @@
     "incremental": true,
     "baseUrl": "src",
     "paths": {
-      "#pages/*": [
-        "pages/*"
-      ],
-      "#hooks/*": [
-        "hooks/*"
-      ],
-      "#types/*": [
-        "types/*"
-      ],
-      "#components/*": [
-        "components/*"
-      ],
-      "#utils/*": [
-        "utils/*"
-      ],
-      "#assets/*": [
-        "assets/*"
-      ],
-      "#styles/*": [
-        "styles/*"
-      ],
-      "#container/*": [
-        "container/*"
-      ]
+      "#pages/*": ["pages/*"],
+      "#hooks/*": ["hooks/*"],
+      "#types/*": ["types/*"],
+      "#components/*": ["components/*"],
+      "#utils/*": ["utils/*"],
+      "#assets/*": ["assets/*"],
+      "#styles/*": ["styles/*"],
+      "#container/*": ["container/*"]
     },
     "plugins": [
       {
@@ -52,13 +32,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
