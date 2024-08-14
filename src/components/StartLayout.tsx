@@ -1,9 +1,6 @@
 import React, { ReactElement } from "react";
-import Container from "./Container";
 import ProgressBar from "./ProgressBar";
-import styled from "styled-components";
-import theme from "#styles/Theme";
-
+import styles from "#styles/components/startLayout.module.css";
 type Props = {
   children: ReactElement;
   title: string;
@@ -12,16 +9,10 @@ type Props = {
 
 export default function StartLayout({ children, progress, title }: Props) {
   return (
-    <>
+    <div>
       <ProgressBar progress={progress} />
-      <Title>{title}</Title>
+      <h1 className={styles.title}>{title}</h1>
       {children}
-    </>
+    </div>
   );
 }
-
-const Title = styled.h1`
-  font-size: ${theme.fontSize.h1};
-  margin: 28px 0px 44px 0px;
-  font-weight: 700;
-`;
