@@ -5,13 +5,26 @@ export type ButtonType = {
   fontSize: "md" | "xl";
   theme: "main" | "white" | "line01" | "bg01";
   onClick: () => void;
-  type?: "submit";
+  type?: "submit" | "button";
+  disabled?: boolean;
 };
 
-const Button = ({ children, theme, fontSize, onClick, type }: ButtonType) => {
+const Button = ({
+  children,
+  theme,
+  fontSize,
+  onClick,
+  type,
+  disabled,
+}: ButtonType) => {
   return (
     <button
-      className={[styles.button, styles[theme], styles[fontSize]].join(" ")}
+      className={[
+        styles.button,
+        disabled ? styles["line01"] : styles[theme],
+        styles[fontSize],
+      ].join(" ")}
+      disabled={disabled}
       type={type}
       onClick={onClick}
     >

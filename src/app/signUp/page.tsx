@@ -1,9 +1,11 @@
 "use client";
 
+import { getAuthenticationCode } from "#api/auth/signUp";
 import SignUpContainer from "#container/SignUpContainer";
 import SuccessContainer from "#container/SuccessContainer";
 
 export default function signUp() {
+  // getAuthenticationCode();
   return (
     <>
       <SignUpContainer />

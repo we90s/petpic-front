@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   poweredByHeader: false,
   eslint: {
     ignoreDuringBuilds: true,
@@ -12,12 +12,21 @@ const nextConfig = {
     domains: ["pet-pic.s3.ap-northeast-2.amazonaws.com"],
   },
   webpack(config) {
+    config.externals = [...config.externals, "bcrypt"];
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
 
     return config;
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination: "http://localhost:8000/:path*",
+      },
+    ];
   },
 };
 
