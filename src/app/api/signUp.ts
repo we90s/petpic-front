@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 async function getAuthenticationCode(email: string) {
@@ -36,7 +38,6 @@ async function handleSignUp(email: string, password: string) {
     password: password,
     username: "",
   };
-
   const response = await fetch(`/auth/register`, {
     method: "POST",
     headers: {

@@ -20,6 +20,7 @@
       "@/*": ["../*"],
       "#pages/*": ["pages/*"],
       "#api/*": ["app/api/*"],
+      "#lib/*": ["app/lib/*"],
       "#hooks/*": ["hooks/*"],
       "#types/*": ["types/*"],
       "#components/*": ["components/*"],

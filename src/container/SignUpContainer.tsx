@@ -2,16 +2,17 @@ import {
   checkAuthenticationCode,
   getAuthenticationCode,
   handleSignUp,
-} from "#api/auth/signUp";
+} from "#api/signUp";
 import Button from "#components/Button";
 import Input from "#components/Input";
 import { useInput } from "#hooks/useInput";
 import styles from "#styles/page/signUp.module.css";
 import { checkValidEmail } from "#utils/checkValidEmail";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import bcrypt from "bcrypt";
 
 export default function SignUpContainer() {
+  const router = useRouter();
   const { input: email, onChange: onChangeEmail } = useInput("");
   const { input: authCode, onChange: onChangeAuthCode } = useInput("");
   const { input: password, onChange: onChangePassword } = useInput("");
@@ -27,11 +28,12 @@ export default function SignUpContainer() {
   >(null);
   const isValidPasswordCheckRef = useRef(false);
   const isValidEmail = checkValidEmail(email);
+
   useEffect(() => {
     if (
-      // isValidEmail &&
-      // authCode !== "" &&
-      // isValidAuthCode &&
+      isValidEmail &&
+      authCode !== "" &&
+      isValidAuthCode === true &&
       password !== "" &&
       passwordCheck !== ""
     ) {
@@ -40,6 +42,7 @@ export default function SignUpContainer() {
       setIsValidSignUpButton(false);
     }
   }, [isValidEmail, authCode, isValidAuthCode, password, passwordCheck]);
+
   const handleSendAuthCode = async () => {
     const success = await getAuthenticationCode(email);
     if (success) {
@@ -54,19 +57,21 @@ export default function SignUpContainer() {
       setIsValidAuthCode(false);
     }
   };
+
   const handleSignUpButton = async () => {
     isValidPasswordRef.current = password.length >= 6;
     setIsValidPassword(password.length >= 6);
     isValidPasswordCheckRef.current = password === passwordCheck;
     setIsValidPasswordCheck(password === passwordCheck);
     if (isValidPasswordRef.current && isValidPasswordCheckRef.current) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(hashedPassword);
-      // handleSignUp(email, hashedPassword);
+      const success = await handleSignUp(email, password);
+      if (success) {
+        router.push("/signUp/success");
+      }
     }
   };
   return (
-    <form method="POST" className={styles.form}>
+    <div className={styles.form}>
       <div className={styles.emailWrapper}>
         <Input
           onChange={onChangeEmail}
@@ -74,6 +79,7 @@ export default function SignUpContainer() {
           label="이메일"
           placeholder="이메일을 입력하세요"
           value={email}
+          autoFocus
         />
         <Button
           fontSize="md"
@@ -133,6 +139,6 @@ export default function SignUpContainer() {
       >
         가입하기
       </Button>
-    </form>
+    </div>
   );
 }

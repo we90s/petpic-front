@@ -12,7 +12,6 @@ const nextConfig = {
     domains: ["pet-pic.s3.ap-northeast-2.amazonaws.com"],
   },
   webpack(config) {
-    config.externals = [...config.externals, "bcrypt"];
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],

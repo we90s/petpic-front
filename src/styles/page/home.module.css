@@ -89,6 +89,10 @@
   position: relative;
 }
 
+.secondPictureWrapper img {
+  border-radius: 25px;
+}
+
 .secondPictureWrapper > div {
   position: absolute;
 }

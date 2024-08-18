@@ -4,7 +4,7 @@ export type ButtonType = {
   children: string;
   fontSize: "md" | "xl";
   theme: "main" | "white" | "line01" | "bg01";
-  onClick: () => void;
+  onClick?: () => void;
   type?: "submit" | "button";
   disabled?: boolean;
 };

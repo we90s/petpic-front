@@ -31,7 +31,7 @@ export default function Main() {
           <div className={styles.textbox}>#강아지</div>
           <div className={styles.textbox}>#해변</div>
           <Image
-            src={IMAGE_BASE_URL + "/dog_in_beach.png"}
+            src={IMAGE_BASE_URL + "/dog_with_beach.png"}
             width={280}
             height={280}
             alt="Picture of dog in beach"

@@ -1,33 +1,70 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "@/auth.config";
+import { z } from "zod";
+
+async function getUser(email: any, password: any) {
+  const body = {
+    email,
+    password,
+  };
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/auth/authenticate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) {
+      throw new Error("로그인 문제");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch user", error);
+    throw new Error("Failed to fetch user");
+  }
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       credentials: {
-        email: { label: "email", type: "email" },
-        password: { label: "password", type: "password" },
+        email: { type: "email" },
+        authCode: { type: "text" },
+        password: { type: "password" },
       },
       authorize: async (credentials) => {
         let user = null;
-
-        // logic to salt and hash password
-        // const pwHash = saltAndHashPassword(credentials.password);
-
-        // logic to verify if the user exists
-        // user = await getUserFromDb(credentials.email, pwHash);
-
-        if (!user) {
-          // No user found, so this is their first attempt to login
-          // meaning this is also the place you could do registration
-          throw new Error("User not found.");
+        const { email, authCode, password } = credentials;
+        // 회원가입
+        if (authCode) {
+          return user;
         }
-
-        // return user object with their profile data
+        // 로그인
+        user = await getUser(email, password);
         return user;
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24,
+  },
+  pages: {
+    signIn: "/signIn",
+  },
+  callbacks: {
+    signIn: async () => {
+      return true;
+    },
+    jwt: async ({ token, user }) => {
+      return token;
+    },
+    session: async ({ session, token }) => {
+      return session;
+    },
+  },
 });
