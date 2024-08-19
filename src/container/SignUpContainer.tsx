@@ -1,82 +1,57 @@
-import {
-  checkAuthenticationCode,
-  getAuthenticationCode,
-  handleSignUp,
-} from "#api/signUp";
 import Button from "#components/Button";
 import Input from "#components/Input";
 import { useInput } from "#hooks/useInput";
 import styles from "#styles/page/signUp.module.css";
-import { checkValidEmail } from "#utils/checkValidEmail";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { signup } from "app/actions/auth";
+import { emailSchema } from "lib/definitions";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useFormState } from "react-dom";
+import { checkAuthenticationCode, getAuthenticationCode } from "services/auth";
 
 export default function SignUpContainer() {
   const router = useRouter();
+  const [state, action] = useFormState(signup, {
+    message: "",
+  });
   const { input: email, onChange: onChangeEmail } = useInput("");
   const { input: authCode, onChange: onChangeAuthCode } = useInput("");
-  const { input: password, onChange: onChangePassword } = useInput("");
-  const { input: passwordCheck, onChange: onChangePasswordCheck } =
-    useInput("");
   const [isActivateAuthCode, setIsActivateAuthCode] = useState(false);
   const [isValidAuthCode, setIsValidAuthCode] = useState<null | boolean>(null);
-  const [isValidSignUpButton, setIsValidSignUpButton] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState<null | boolean>(null);
-  const isValidPasswordRef = useRef(false);
-  const [isValidPasswordCheck, setIsValidPasswordCheck] = useState<
-    null | boolean
-  >(null);
-  const isValidPasswordCheckRef = useRef(false);
-  const isValidEmail = checkValidEmail(email);
-
-  useEffect(() => {
-    if (
-      isValidEmail &&
-      authCode !== "" &&
-      isValidAuthCode === true &&
-      password !== "" &&
-      passwordCheck !== ""
-    ) {
-      setIsValidSignUpButton(true);
-    } else {
-      setIsValidSignUpButton(false);
-    }
-  }, [isValidEmail, authCode, isValidAuthCode, password, passwordCheck]);
+  const isValidEmail = emailSchema.safeParse(email).success;
 
   const handleSendAuthCode = async () => {
-    const success = await getAuthenticationCode(email);
-    if (success) {
+    const data = await getAuthenticationCode(email);
+    if (data.success) {
       setIsActivateAuthCode(true);
+    } else {
+      // 토스트 처리
+      console.log(data.error);
     }
   };
+
   const handleCheckAuthCode = async () => {
-    const success = await checkAuthenticationCode(email, authCode);
-    if (success) {
+    const data = await checkAuthenticationCode(email, authCode);
+    if (data.success) {
       setIsValidAuthCode(true);
     } else {
       setIsValidAuthCode(false);
     }
   };
 
-  const handleSignUpButton = async () => {
-    isValidPasswordRef.current = password.length >= 6;
-    setIsValidPassword(password.length >= 6);
-    isValidPasswordCheckRef.current = password === passwordCheck;
-    setIsValidPasswordCheck(password === passwordCheck);
-    if (isValidPasswordRef.current && isValidPasswordCheckRef.current) {
-      const success = await handleSignUp(email, password);
-      if (success) {
-        router.push("/signUp/success");
-      }
-    }
-  };
+  if (state?.username) {
+    router.push("/");
+  }
+
   return (
-    <div className={styles.form}>
+    <form action={action} className={styles.form}>
       <div className={styles.emailWrapper}>
         <Input
+          id="email"
           onChange={onChangeEmail}
           type="email"
           label="이메일"
+          name="email"
           placeholder="이메일을 입력하세요"
           value={email}
           autoFocus
@@ -113,32 +88,29 @@ export default function SignUpContainer() {
         </div>
       )}
       <Input
-        onChange={onChangePassword}
         type="password"
         label="비밀번호"
+        name="password"
         placeholder="최소 6자 이상 입력"
-        value={password}
-        isError={isValidPassword === false}
-        errorLabel="비밀번호를 6자 이상 입력해주세요."
+        isError={state?.errors?.password}
+        errorLabel={state?.errors?.password}
       />
       <Input
-        onChange={onChangePasswordCheck}
         type="password"
         label="비밀번호 확인"
         placeholder="비밀번호 확인"
-        value={passwordCheck}
-        isError={isValidPasswordCheck === false}
-        errorLabel="비밀번호와 다릅니다."
+        name="passwordCheck"
+        isError={state?.errors?.passwordCheck}
+        errorLabel={state?.errors?.passwordCheck}
       />
       <Button
         fontSize="xl"
         theme="main"
-        type="button"
-        disabled={!isValidSignUpButton}
-        onClick={handleSignUpButton}
+        type="submit"
+        disabled={isValidAuthCode !== true}
       >
         가입하기
       </Button>
-    </div>
+    </form>
   );
 }

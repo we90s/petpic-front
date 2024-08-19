@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "@/auth.config";
-import { z } from "zod";
 
 async function getUser(email: any, password: any) {
   const body = {
@@ -22,7 +21,6 @@ async function getUser(email: any, password: any) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch user", error);
     throw new Error("Failed to fetch user");
   }
 }

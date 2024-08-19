@@ -4,24 +4,29 @@ import Button from "#components/Button";
 import Input from "#components/Input";
 import Link from "next/link";
 import styles from "#styles/page/signIn.module.css";
-import { signInWithCredentials } from "#lib/actions";
-import { useState } from "react";
-import { checkValidEmail } from "#utils/checkValidEmail";
+import { signInWithCredentials } from "lib/actions";
+import { useFormState } from "react-dom";
 
 export default function SignIn() {
+  const [state, action] = useFormState(signInWithCredentials, {
+    message: "",
+  });
   return (
     <>
       <div className={styles.h1}>
         <span>🐶 🐾</span>
         가입하고 무료로 댕냥이 사진을 받아보세요
       </div>
-      <form action={signInWithCredentials} className={styles.form}>
+      <form action={action} className={styles.form}>
         <Input
           autoFocus
           label="이메일로 로그인"
           id="email"
+          type="email"
           name="email"
+          isError={state?.message !== "" && state !== undefined}
           placeholder="이메일을 입력해 주세요"
+          errorLabel="등록된 이메일이 없거나 비밀번호가 잘못되었어요."
           required
         />
         <Input
@@ -37,14 +42,7 @@ export default function SignIn() {
           <span>|</span>
           <Link href="/">비밀번호 찾기</Link>
         </div>
-        <Button
-          type="submit"
-          fontSize="xl"
-          theme="main"
-          onClick={() => {
-            console.log("asd");
-          }}
-        >
+        <Button type="submit" fontSize="xl" theme="main">
           로그인
         </Button>
       </form>
