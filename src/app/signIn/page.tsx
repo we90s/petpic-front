@@ -4,13 +4,20 @@ import Button from "#components/Button";
 import Input from "#components/Input";
 import Link from "next/link";
 import styles from "#styles/page/signIn.module.css";
-import { signInWithCredentials } from "lib/actions";
 import { useFormState } from "react-dom";
+import { signin } from "app/actions/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  const [state, action] = useFormState(signInWithCredentials, {
+  const router = useRouter();
+  const [state, action] = useFormState(signin, {
     message: "",
   });
+
+  if (state?.success) {
+    router.push("/");
+  }
+
   return (
     <>
       <div className={styles.h1}>
@@ -24,9 +31,9 @@ export default function SignIn() {
           id="email"
           type="email"
           name="email"
-          isError={state?.message !== "" && state !== undefined}
           placeholder="이메일을 입력해 주세요"
-          errorLabel="등록된 이메일이 없거나 비밀번호가 잘못되었어요."
+          isError={state?.error}
+          errorLabel={state?.error}
           required
         />
         <Input

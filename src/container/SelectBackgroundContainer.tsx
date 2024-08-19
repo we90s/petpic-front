@@ -3,12 +3,11 @@ import StartLayout from "#components/StartLayout";
 import { IMAGE_BASE_URL } from "#utils/baseUrl";
 import Link from "next/link";
 import React from "react";
-import styled from "styled-components";
 
 export default function SelectBackgroundContainer() {
   return (
     <StartLayout progress="first" title="배경을 선택해 주세요">
-      <ImageWrapper>
+      <div>
         <Link href="#beach">
           <SelectImageWithText
             src={IMAGE_BASE_URL + "/dog_with_beach.png"}
@@ -26,14 +25,7 @@ export default function SelectBackgroundContainer() {
           altText="cat with grass"
           text="파리"
         />
-      </ImageWrapper>
+      </div>
     </StartLayout>
   );
 }
-
-const ImageWrapper = styled.div`
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  align-items: center;
-`;

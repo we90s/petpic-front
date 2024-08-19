@@ -7,9 +7,7 @@ import React from "react";
 export default function background() {
   return (
     <>
-      <section id="">
-        <SelectBackgroundContainer />
-      </section>
+      <section id="">{/* <SelectBackgroundContainer /> */}</section>
       <section id="beach">
         <UploadImageContainer />
       </section>
