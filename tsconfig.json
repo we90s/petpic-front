@@ -18,6 +18,8 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["../*"],
+      "#actions/*": ["actions/*"],
+      "#services/*": ["services/*"],
       "#pages/*": ["pages/*"],
       "#api/*": ["app/api/*"],
       "#lib/*": ["app/lib/*"],

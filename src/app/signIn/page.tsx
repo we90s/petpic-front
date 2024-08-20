@@ -5,8 +5,10 @@ import Input from "#components/Input";
 import Link from "next/link";
 import styles from "#styles/page/signIn.module.css";
 import { useFormState } from "react-dom";
-import { signin } from "app/actions/auth";
+import { signin } from "#actions/auth";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { AuthContext } from "app/provider";
 
 export default function SignIn() {
   const router = useRouter();
@@ -14,7 +16,12 @@ export default function SignIn() {
     message: "",
   });
 
+  const { setEmail } = useContext(AuthContext);
+
   if (state?.success) {
+    if (setEmail) {
+      setEmail(state?.email);
+    }
     router.push("/");
   }
 

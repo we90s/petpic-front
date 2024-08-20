@@ -1,5 +1,4 @@
-"use server";
-
+import { createSession } from "#lib/session";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -29,7 +28,18 @@ export async function POST(request: Request) {
         error: "이메일이나 비밀번호가 잘못되었습니다.",
       });
     }
-    return NextResponse.json({ success: true });
+
+    const session = {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+    };
+
+    await createSession(JSON.stringify(session));
+
+    return NextResponse.json({
+      success: true,
+      email: data.username,
+    });
   } catch (error) {
     return NextResponse.json({ error: "네트워크 오류" });
   }

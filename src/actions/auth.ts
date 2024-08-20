@@ -1,4 +1,4 @@
-import { SignUpFormSchema, emailSchema, FormState } from "lib/definitions";
+import { SignUpFormSchema, emailSchema, FormState } from "#lib/definitions";
 
 export async function signin(state: FormState, formData: FormData) {
   const validatedFields = emailSchema.safeParse(formData.get("email"));

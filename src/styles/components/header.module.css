@@ -8,6 +8,7 @@
 
 .signIn {
   color: #717176;
+  font-weight: 700;
   font-size: var(--xl);
   text-decoration: none;
 }

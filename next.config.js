@@ -19,6 +19,9 @@ const nextConfig = {
 
     return config;
   },
+  experimental: {
+    middleware: true,
+  },
   async rewrites() {
     return [
       {
