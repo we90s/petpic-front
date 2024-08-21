@@ -1,0 +1,25 @@
+.textBox {
+  border: 1px solid var(--line01);
+  border-top: none;
+  border-radius: 0px 0px 12px 12px;
+  height: 72px;
+  color: var(--text03);
+  font-size: var(--xxl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.selectImageWithTextBox {
+  width: 218px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.selectImageWithTextBox:hover {
+  border: 2px solid var(--main);
+  border-radius: 22px 22px 14px 14px;
+}
