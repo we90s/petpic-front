@@ -12,3 +12,13 @@
   font-size: var(--xl);
   text-decoration: none;
 }
+
+.signOut {
+  color: #717176;
+  font-weight: 700;
+  font-size: var(--xl);
+  border: none;
+  background: transparent;
+  margin-left: 8px;
+  cursor: pointer;
+}

@@ -4,13 +4,12 @@ import { cookies } from "next/headers";
 const secretKey = process.env.AUTH_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function createSession(session: string) {
+export function createSession(session: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   cookies().set("session", session, {
     httpOnly: true,
-    // FIXME: 로컬환경에서는 http, 프로덕션에서는 바꿔줘야함
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     expires: expiresAt,
     sameSite: "lax",
     path: "/",
@@ -26,4 +25,22 @@ export async function decrypt(session: string | undefined = "") {
   } catch (error) {
     console.log("Failed to verify session");
   }
+}
+
+export function getSession() {
+  const cookie = cookies().get("session")?.value;
+  if (!cookie) {
+    return {
+      success: false,
+    };
+  }
+  const { accessToken, refreshToken } = JSON.parse(cookie);
+  return {
+    success: true,
+    accessToken,
+  };
+}
+
+export function deleteSession() {
+  cookies().delete("session");
 }

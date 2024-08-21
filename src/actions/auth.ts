@@ -1,11 +1,17 @@
-import { SignUpFormSchema, emailSchema, FormState } from "#lib/definitions";
+"use server";
 
-export async function signin(state: FormState, formData: FormData) {
+import { SignUpFormSchema, emailSchema, FormState } from "#lib/definitions";
+import { createSession } from "#lib/session";
+
+export async function signin(prevState: FormState, formData: FormData) {
   const validatedFields = emailSchema.safeParse(formData.get("email"));
 
   if (!validatedFields.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: validatedFields.error.flatten().fieldErrors as {
+        email?: string[];
+      },
+      message: "잘못된 이메일 형식입니다.",
     };
   }
 
@@ -17,20 +23,39 @@ export async function signin(state: FormState, formData: FormData) {
     password,
   };
 
-  const response = await fetch("/api/signin", {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/auth/authenticate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) {
-    throw new Error("로그인 오류");
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        message: "이메일이나 비밀번호가 잘못되었습니다.",
+      };
+    }
+
+    const session = {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+    };
+
+    await createSession(JSON.stringify(session));
+
+    return { email: data.username };
+  } catch (error) {
+    return {
+      message: "네트워크 오류",
+    };
   }
-
-  const data = await response.json();
-  return data;
 }
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(prevState: FormState, formData: FormData) {
   const validatedFields = SignUpFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -48,17 +73,29 @@ export async function signup(state: FormState, formData: FormData) {
   const body = {
     email,
     password,
+    username: "",
   };
 
-  const response = await fetch("/api/signup", {
+  const response = await fetch(`${process.env.BASE_URL}/auth/register`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   });
 
   if (!response.ok) {
-    throw new Error("회원가입 오류");
+    return { error: "회원가입 실패" };
   }
 
   const data = await response.json();
+
+  const session = {
+    accessToken: data.access_token,
+    refreshToken: data.refresh_token,
+  };
+
+  await createSession(JSON.stringify(session));
+
   return data;
 }

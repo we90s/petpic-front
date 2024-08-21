@@ -5,15 +5,17 @@ import styles from "#styles/page/signUp.module.css";
 import { signup } from "actions/auth";
 import { emailSchema } from "#lib/definitions";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useFormState } from "react-dom";
-import { checkAuthenticationCode, getAuthenticationCode } from "services/auth";
+import { checkAuthenticationCode, getAuthenticationCode } from "#lib/auth";
+import { AuthContext } from "app/provider";
 
 export default function SignUpContainer() {
   const router = useRouter();
   const [state, action] = useFormState(signup, {
     message: "",
   });
+  const { setEmail } = useContext(AuthContext);
   const { input: email, onChange: onChangeEmail } = useInput("");
   const { input: authCode, onChange: onChangeAuthCode } = useInput("");
   const [isActivateAuthCode, setIsActivateAuthCode] = useState(false);
@@ -41,6 +43,9 @@ export default function SignUpContainer() {
 
   if (state?.username) {
     router.push("/");
+    if (setEmail) {
+      setEmail(state?.username);
+    }
   }
 
   return (
