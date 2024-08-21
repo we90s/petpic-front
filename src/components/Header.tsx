@@ -6,7 +6,7 @@ import styles from "#styles/components/header.module.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "app/provider";
 import { useRouter } from "next/navigation";
-import { signOut } from "#lib/auth";
+import { checkAuthStatus, resign, signOut } from "#lib/auth";
 
 export default function Header() {
   const router = useRouter();
@@ -14,8 +14,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkLoginStatus = async () => {
-    const response = await fetch("/api/authStatus");
-    const data = await response.json();
+    const data = await checkAuthStatus();
     if (data.success) {
       if (setEmail) {
         setEmail(data.email);
@@ -38,6 +37,18 @@ export default function Header() {
     router.push("/");
   };
 
+  const resignHandler = async () => {
+    const data = await resign();
+    if (!data.success) {
+      return;
+    }
+    setIsLoggedIn(false);
+    if (setEmail) {
+      setEmail("");
+    }
+    router.push("/");
+  };
+
   useEffect(() => {
     if (email) {
       setIsLoggedIn(true);
@@ -45,7 +56,6 @@ export default function Header() {
       checkLoginStatus();
     }
   }, [email]);
-
   return (
     <div className={styles.header}>
       <Link href="/">
@@ -58,6 +68,9 @@ export default function Header() {
           </Link>
           <button className={styles.signOut} onClick={signOutHandler}>
             로그아웃
+          </button>
+          <button className={styles.signOut} onClick={resignHandler}>
+            탈퇴
           </button>
         </div>
       ) : (

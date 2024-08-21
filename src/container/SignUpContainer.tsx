@@ -112,7 +112,7 @@ export default function SignUpContainer() {
         fontSize="xl"
         theme="main"
         type="submit"
-        disabled={isValidAuthCode !== true}
+        // disabled={isValidAuthCode !== true}
       >
         가입하기
       </Button>

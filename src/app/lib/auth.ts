@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteSession, getSession } from "./session";
+import { createSession, deleteSession, getSession } from "./session";
 
 export async function getAuthenticationCode(email: string) {
   try {
@@ -49,6 +49,7 @@ export async function checkAuthenticationCode(email: string, authCode: string) {
 
 export async function signOut() {
   const session = getSession();
+
   if (!session.success) {
     return { error: "로그인 중이 아닙니다!" };
   }
@@ -71,5 +72,99 @@ export async function signOut() {
     return { success: true };
   } catch (error) {
     return { error: "인증메일 보내기 실패" };
+  }
+}
+
+export async function checkAuthStatus() {
+  const session = getSession();
+
+  if (!session.success) {
+    return {
+      error: "로그인 되어있지 않음",
+    };
+  }
+
+  try {
+    const validateAccessTokenResponse = await fetch(
+      `${process.env.BASE_URL}/auth/validate`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      }
+    );
+
+    if (!validateAccessTokenResponse.ok) {
+      const newAccessTokenResponse = await fetch(
+        `${process.env.BASE_URL}/auth/refresh-token`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.refreshToken}`,
+          },
+        }
+      );
+
+      if (!newAccessTokenResponse.ok) {
+        return {
+          success: false,
+          message: "refreshToken이 잘못된걸지도?",
+        };
+      }
+
+      const data = await newAccessTokenResponse.json();
+
+      const newSession = {
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+      };
+
+      createSession(JSON.stringify(newSession));
+
+      return {
+        success: true,
+        email: data.username,
+      };
+    }
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
+export async function resign() {
+  const session = getSession();
+
+  if (!session.success) {
+    return {
+      error: "로그인 되어있지 않음",
+    };
+  }
+
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/auth/resign`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        error: "회원 탈퇴 실패",
+      };
+    }
+
+    deleteSession();
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return { success: false, error };
   }
 }

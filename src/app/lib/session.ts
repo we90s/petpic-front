@@ -35,9 +35,11 @@ export function getSession() {
     };
   }
   const { accessToken, refreshToken } = JSON.parse(cookie);
+
   return {
     success: true,
     accessToken,
+    refreshToken,
   };
 }
 
