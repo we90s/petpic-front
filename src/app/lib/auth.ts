@@ -94,7 +94,6 @@ export async function checkAuthStatus() {
         },
       }
     );
-
     if (!validateAccessTokenResponse.ok) {
       const newAccessTokenResponse = await fetch(
         `${process.env.BASE_URL}/auth/refresh-token`,

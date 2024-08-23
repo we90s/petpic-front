@@ -1,0 +1,26 @@
+.form {
+  text-align: left;
+}
+
+.form input {
+  margin-top: 16px;
+}
+
+.checkboxWrapper {
+  margin-left: 20px;
+  margin-top: 17px;
+  display: flex;
+  margin-bottom: 60px;
+}
+
+.checkboxWrapper label {
+  font-size: var(--md);
+  line-height: var(--xxl);
+  margin-left: 4px;
+}
+
+.checkboxWrapper span {
+  color: var(--text03);
+  font-size: var(--md);
+  line-height: var(--xxl);
+}

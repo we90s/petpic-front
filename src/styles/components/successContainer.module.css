@@ -56,8 +56,33 @@
   margin-bottom: 60px;
 }
 
+.p span {
+  font-size: var(--lg);
+  color: var(--main);
+}
+
 .buttonWrapper {
   display: flex;
   justify-content: center;
   gap: 12px;
+}
+
+.buttonWrapper a {
+  text-decoration: none;
+}
+
+.buttonWrapper button {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.buttonWrapper button > svg {
+  margin-right: 6px;
+}
+
+.buttonDescription {
+  font-size: var(--lg);
+  color: var(--text03);
+  margin-bottom: 12px;
 }

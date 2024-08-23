@@ -42,7 +42,7 @@ export default function SignUpContainer() {
   };
 
   if (state?.username) {
-    router.push("/");
+    router.push("/signUp/success");
     if (setEmail) {
       setEmail(state?.username);
     }

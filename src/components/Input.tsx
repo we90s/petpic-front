@@ -9,9 +9,10 @@ type InputType = {
   errorLabel?: string;
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: any;
+  value?: string;
   autoFocus?: boolean;
   required?: boolean;
+  defaultValue?: string;
 };
 
 export default function Input({
@@ -26,6 +27,7 @@ export default function Input({
   value,
   autoFocus,
   required,
+  defaultValue,
 }: InputType) {
   return (
     <div>
@@ -44,6 +46,7 @@ export default function Input({
         onChange={onChange}
         value={value}
         required={required}
+        defaultValue={defaultValue}
       />
       {isError && errorLabel && (
         <label className={styles.errorLabel}>{errorLabel}</label>

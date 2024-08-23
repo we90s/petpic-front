@@ -44,6 +44,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/api/api.js"
-  ],
+, "src/app/myPage"  ],
   "exclude": ["node_modules"]
 }

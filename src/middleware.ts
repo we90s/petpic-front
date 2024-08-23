@@ -5,7 +5,10 @@ const protectedRoutes = ["/start", "/myPage"];
 const publicRoutes = ["/signIn", "/signUp"];
 
 export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
+  let path = request.nextUrl.pathname;
+  if (path.includes("/start")) {
+    path = "/start";
+  }
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 

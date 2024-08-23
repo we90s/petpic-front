@@ -57,7 +57,7 @@ export default function Header() {
     }
   }, [email]);
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Link href="/">
         <LOGO />
       </Link>
@@ -78,6 +78,6 @@ export default function Header() {
           로그인
         </Link>
       )}
-    </div>
+    </header>
   );
 }

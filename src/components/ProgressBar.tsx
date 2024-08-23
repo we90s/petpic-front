@@ -17,9 +17,9 @@ export default function ProgressBar({ progress }: Props) {
         x2="278"
         y2="11"
         stroke="#DBDBDB"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-dasharray="6 6"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="6 6"
       />
       <circle
         cx="11"
@@ -31,7 +31,7 @@ export default function ProgressBar({ progress }: Props) {
             ? "#3A49E6"
             : "#DBDBDB"
         }
-        stroke-width="5"
+        strokeWidth="5"
       />
       <circle
         cx="146"
@@ -41,7 +41,7 @@ export default function ProgressBar({ progress }: Props) {
         stroke={
           progress === "second" || progress === "third" ? "#3A49E6" : "#DBDBDB"
         }
-        stroke-width="5"
+        strokeWidth="5"
       />
       <circle
         cx="279"
@@ -49,7 +49,7 @@ export default function ProgressBar({ progress }: Props) {
         r="8.5"
         fill="white"
         stroke={progress === "third" ? "#3A49E6" : "#DBDBDB"}
-        stroke-width="5"
+        strokeWidth="5"
       />
     </svg>
   );

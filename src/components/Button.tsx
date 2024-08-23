@@ -1,7 +1,7 @@
 import styles from "#styles/components/button.module.css";
 
 export type ButtonType = {
-  children: string;
+  children: string | React.ReactNode;
   fontSize: "md" | "xl";
   theme: "main" | "white" | "line01" | "bg01";
   onClick?: () => void;
