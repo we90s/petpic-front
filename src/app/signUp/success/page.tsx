@@ -1,6 +1,4 @@
-"use client";
-
-import SuccessContainer from "#container/SuccessContainer";
+import SuccessContainer from "@container/SuccessContainer";
 
 export default function signUp() {
   return (
@@ -13,7 +11,6 @@ export default function signUp() {
           children: "무료로 사진 만들기",
           theme: "white",
           fontSize: "xl",
-          onClick: () => console.log("asd"),
         },
       ]}
     />

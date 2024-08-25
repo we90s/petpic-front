@@ -1,4 +1,4 @@
-import styles from "#styles/components/button.module.css";
+import styles from "@styles/components/button.module.css";
 
 export type ButtonType = {
   children: string | React.ReactNode;

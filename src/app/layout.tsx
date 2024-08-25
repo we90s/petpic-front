@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import "#styles/global.css";
-import Container from "#components/Container";
-import Header from "#components/Header";
+import "@styles/global.css";
+import Container from "@components/Container";
+import Header from "@components/Header";
 import AuthProvider from "./provider";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 "use server";
 
-import { SignUpFormSchema, emailSchema, FormState } from "#lib/definitions";
-import { createSession } from "#lib/session";
+import { SignUpFormSchema, emailSchema, FormState } from "@lib/definitions";
+import { createSession } from "@lib/session";
 
 export async function signin(prevState: FormState, formData: FormData) {
   const validatedFields = emailSchema.safeParse(formData.get("email"));

@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import LOGO from "#assets/logo.svg";
-import styles from "#styles/components/header.module.css";
+import LOGO from "@assets/logo.svg";
+import styles from "@styles/components/header.module.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "app/provider";
 import { useRouter } from "next/navigation";
-import { checkAuthStatus, resign, signOut } from "#lib/auth";
+import { checkAuthStatus, resign, signOut } from "@lib/auth";
 
 export default function Header() {
   const router = useRouter();
@@ -62,21 +62,29 @@ export default function Header() {
         <LOGO />
       </Link>
       {isLoggedIn ? (
-        <div>
-          <Link className={styles.signIn} href="/myPage">
-            나의 앨범
-          </Link>
-          <button className={styles.signOut} onClick={signOutHandler}>
-            로그아웃
-          </button>
-          <button className={styles.signOut} onClick={resignHandler}>
+        <nav>
+          <li>
+            <Link className={styles.signIn} href="/myPage">
+              나의 앨범
+            </Link>
+          </li>
+          <li>
+            <button className={styles.signOut} onClick={signOutHandler}>
+              로그아웃
+            </button>
+          </li>
+          {/* <button className={styles.signOut} onClick={resignHandler}>
             탈퇴
-          </button>
-        </div>
+          </button> */}
+        </nav>
       ) : (
-        <Link className={styles.signIn} href="/signIn">
-          로그인
-        </Link>
+        <nav>
+          <li>
+            <Link className={styles.signIn} href="/signIn">
+              로그인
+            </Link>
+          </li>
+        </nav>
       )}
     </header>
   );

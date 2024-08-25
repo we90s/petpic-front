@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "#styles/components/selectImageWithText.module.css";
+import styles from "@styles/components/selectImageWithText.module.css";
 import Link from "next/link";
 type Props = {
   src: string;

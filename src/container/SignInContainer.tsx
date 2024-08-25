@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "#components/Button";
-import Input from "#components/Input";
+import Button from "@components/Button";
+import Input from "@components/Input";
 import Link from "next/link";
-import styles from "#styles/page/signIn.module.css";
+import styles from "@styles/page/signIn.module.css";
 import { useFormState } from "react-dom";
-import { signin } from "#actions/auth";
+import { signin } from "@actions/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AuthContext } from "app/provider";

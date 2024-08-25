@@ -1,8 +1,8 @@
-import SelectImageWithText from "#components/SelectImageWithText";
-import StartLayout from "#components/StartLayout";
-import { IMAGE_BASE_URL } from "#utils/baseUrl";
+import SelectImageWithText from "@components/SelectImageWithText";
+import StartLayout from "@components/StartLayout";
+import { IMAGE_BASE_URL } from "@utils/baseUrl";
 import React from "react";
-import styles from "#styles/page/selectBackground.module.css";
+import styles from "@styles/page/selectBackground.module.css";
 
 export default function SelectBackgroundContainer() {
   return (

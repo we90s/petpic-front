@@ -1,6 +1,4 @@
-"use client";
-
-import SignInContaier from "#container/SignInContainer";
+import SignInContaier from "@container/SignInContainer";
 
 export default function SignIn() {
   return <SignInContaier />;

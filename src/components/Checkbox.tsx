@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "#styles/components/checkbox.module.css";
+import styles from "@styles/components/checkbox.module.css";
 
 type Props = {
   id: string;

@@ -1,4 +1,4 @@
-import { decrypt } from "#lib/session";
+import { decrypt } from "@lib/session";
 import { NextRequest, NextResponse } from "next/server";
 
 const protectedRoutes = ["/start", "/myPage"];
@@ -31,5 +31,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/start/:path*", "/myPage/:path*", "/signIn", "/signUp/:path*"],
 };

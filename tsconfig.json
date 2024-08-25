@@ -18,18 +18,18 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["../*"],
-      "#actions/*": ["actions/*"],
-      "#services/*": ["services/*"],
-      "#pages/*": ["pages/*"],
-      "#api/*": ["app/api/*"],
-      "#lib/*": ["app/lib/*"],
-      "#hooks/*": ["hooks/*"],
-      "#types/*": ["types/*"],
-      "#components/*": ["components/*"],
-      "#utils/*": ["utils/*"],
-      "#assets/*": ["assets/*"],
-      "#styles/*": ["styles/*"],
-      "#container/*": ["container/*"]
+      "@actions/*": ["actions/*"],
+      "@services/*": ["services/*"],
+      "@pages/*": ["pages/*"],
+      "@api/*": ["app/api/*"],
+      "@lib/*": ["lib/*"],
+      "@hooks/*": ["hooks/*"],
+      "@types/*": ["types/*"],
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
+      "@container/*": ["container/*"]
     },
     "plugins": [
       {
@@ -43,7 +43,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/api/api.js"
-, "src/app/myPage"  ],
+    "src/app/api/api.js",
+    "src/app/myPage"
+  ],
   "exclude": ["node_modules"]
 }

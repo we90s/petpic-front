@@ -1,12 +1,12 @@
-import Button from "#components/Button";
-import Input from "#components/Input";
-import StartLayout from "#components/StartLayout";
-import { useInput } from "#hooks/useInput";
+import Button from "@components/Button";
+import Input from "@components/Input";
+import StartLayout from "@components/StartLayout";
+import { useInput } from "@hooks/useInput";
 import { AuthContext } from "app/provider";
 import React, { useContext, useState } from "react";
-import styles from "#styles/page/sendMail.module.css";
-import Checkbox from "#components/Checkbox";
-import { uploadImage } from "#actions/uploadImage";
+import styles from "@styles/page/sendMail.module.css";
+import Checkbox from "@components/Checkbox";
+import { uploadImage } from "@actions/uploadImage";
 import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 

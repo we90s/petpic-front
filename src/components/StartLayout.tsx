@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import ProgressBar from "./ProgressBar";
-import styles from "#styles/components/startLayout.module.css";
+import styles from "@styles/components/startLayout.module.css";
 type Props = {
   children: ReactElement[] | ReactElement;
   title: string;

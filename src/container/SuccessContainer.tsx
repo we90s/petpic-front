@@ -1,6 +1,6 @@
-import Button, { ButtonType } from "#components/Button";
+import Button, { ButtonType } from "@components/Button";
 import Link from "next/link";
-import styles from "#styles/components/successContainer.module.css";
+import styles from "@styles/components/successContainer.module.css";
 
 type Props = {
   title: string;

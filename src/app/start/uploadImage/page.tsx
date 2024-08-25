@@ -1,7 +1,7 @@
 "use client";
 
-import SendMailContainer from "#container/SendMailContainer";
-import UploadImageContainer from "#container/UploadImageContainer";
+import SendMailContainer from "@container/SendMailContainer";
+import UploadImageContainer from "@container/UploadImageContainer";
 import React, { useState } from "react";
 
 export default function page() {

@@ -1,13 +1,12 @@
 "use server";
 
-import { emailSchema } from "#lib/definitions";
+import { emailSchema } from "@lib/definitions";
 
 export async function uploadImage(
   imgSrc: string,
   prevState: any,
   formData: FormData
 ) {
-  console.log(formData.get("email"));
   const validatedFields = emailSchema.safeParse(formData.get("email"));
 
   if (!validatedFields.success) {

@@ -1,13 +1,15 @@
-import Button from "#components/Button";
-import Input from "#components/Input";
-import { useInput } from "#hooks/useInput";
-import styles from "#styles/page/signUp.module.css";
+"use client";
+
+import Button from "@components/Button";
+import Input from "@components/Input";
+import { useInput } from "@hooks/useInput";
+import styles from "@styles/page/signUp.module.css";
 import { signup } from "actions/auth";
-import { emailSchema } from "#lib/definitions";
+import { emailSchema } from "@lib/definitions";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { useFormState } from "react-dom";
-import { checkAuthenticationCode, getAuthenticationCode } from "#lib/auth";
+import { checkAuthenticationCode, getAuthenticationCode } from "@lib/auth";
 import { AuthContext } from "app/provider";
 
 export default function SignUpContainer() {
@@ -112,7 +114,7 @@ export default function SignUpContainer() {
         fontSize="xl"
         theme="main"
         type="submit"
-        // disabled={isValidAuthCode !== true}
+        disabled={isValidAuthCode !== true}
       >
         가입하기
       </Button>

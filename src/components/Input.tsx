@@ -1,4 +1,4 @@
-import styles from "#styles/components/input.module.css";
+import styles from "@styles/components/input.module.css";
 
 type InputType = {
   id?: string;
