@@ -7,7 +7,27 @@ interface AuthContextType {
   setEmail?: React.Dispatch<SetStateAction<string>>;
 }
 
+interface ImgSrcContextType {
+  imgSrc: string;
+  setImgSrc: React.Dispatch<SetStateAction<string>>;
+}
+
 export const AuthContext = createContext<AuthContextType>({});
+export const ImgSrcContext = createContext<ImgSrcContextType>({
+  imgSrc: "",
+  setImgSrc: () => {},
+});
+
+export function ImgSrcProvider({ children }: { children: React.ReactNode }) {
+  const [imgSrc, setImgSrc] = useState("");
+  const value = {
+    imgSrc,
+    setImgSrc,
+  };
+  return (
+    <ImgSrcContext.Provider value={value}>{children}</ImgSrcContext.Provider>
+  );
+}
 
 export default function AuthProvider({
   children,

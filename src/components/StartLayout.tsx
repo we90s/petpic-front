@@ -1,8 +1,7 @@
-import { ReactElement } from "react";
 import ProgressBar from "./ProgressBar";
 import styles from "@styles/components/startLayout.module.css";
 type Props = {
-  children: ReactElement[] | ReactElement;
+  children: React.ReactNode;
   title: string;
   progress: "first" | "second" | "third";
 };

@@ -23,11 +23,5 @@ export async function uploadImage(
     imgSrc,
   };
 
-  try {
-    redirect("/start/uploadImage/success");
-  } catch (error) {
-    return {
-      message: "네트워크 오류",
-    };
-  }
+  redirect("/start/success");
 }

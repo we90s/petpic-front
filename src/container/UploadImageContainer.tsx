@@ -1,23 +1,16 @@
-import StartLayout from "@components/StartLayout";
-import { IMAGE_BASE_URL } from "@utils/baseUrl";
+"use client";
+
 import Image from "next/image";
-import { SetStateAction, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "@styles/page/uploadImage.module.css";
-import CHECK_ICON from "@assets/checkIcon.svg";
 import X_ICON from "@assets/xIcon.svg";
 import Button from "@components/Button";
+import { useRouter } from "next/navigation";
+import { ImgSrcContext } from "app/provider";
 
-interface Props {
-  imgSrc: string;
-  setImgSrc: React.Dispatch<SetStateAction<string>>;
-  setMode: React.Dispatch<SetStateAction<string>>;
-}
-
-export default function UploadImageContainer({
-  imgSrc,
-  setImgSrc,
-  setMode,
-}: Props) {
+export default function UploadImageContainer() {
+  const router = useRouter();
+  const { imgSrc, setImgSrc } = useContext(ImgSrcContext);
   const [isDragging, setIsDragging] = useState(false);
   const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -64,71 +57,7 @@ export default function UploadImageContainer({
     setImgSrc("");
   };
   return (
-    <StartLayout progress="second" title="사진을 업로드해 주세요">
-      <h2 className={styles.title}>이런 사진이 좋아요</h2>
-      <div className={styles.container}>
-        <div className={styles.goodImageWrapper}>
-          <div className={styles.status}>
-            <CHECK_ICON />
-            Good
-          </div>
-          <div>
-            <Image
-              src={IMAGE_BASE_URL + "/goodImage1.png"}
-              alt="good image sample1"
-              width={160}
-              height={160}
-            />
-            <div className={styles.text}>
-              반려동물의 형태가 잘 보이는 <br />
-              사진
-            </div>
-          </div>
-          <div>
-            <Image
-              src={IMAGE_BASE_URL + "/goodImage2.png"}
-              alt="good image sample2"
-              width={160}
-              height={160}
-            />
-            <div className={styles.text}>
-              배경과의 경계선이 <br />
-              뚜렷한 사진
-            </div>
-          </div>
-        </div>
-        <div className={styles.badImageWrapper}>
-          <div className={styles.status}>
-            <X_ICON fill="#EA4335" stroke="#EA4335" />
-            Bad
-          </div>
-          <div>
-            <Image
-              src={IMAGE_BASE_URL + "/badImage1.png"}
-              alt="bad image sample1"
-              width={160}
-              height={160}
-            />
-            <div className={styles.text}>
-              반려동물의 형태와 배경이
-              <br />
-              구분되지 않은 사진
-            </div>
-          </div>
-          <div>
-            <Image
-              src={IMAGE_BASE_URL + "/badImage2.png"}
-              alt="bad image sample2"
-              width={160}
-              height={160}
-            />
-            <div className={styles.text}>
-              반려동물의 색과 배경이 <br />
-              비슷한 사진
-            </div>
-          </div>
-        </div>
-      </div>
+    <>
       <div
         className={
           imgSrc || isDragging
@@ -157,10 +86,10 @@ export default function UploadImageContainer({
         theme="main"
         fontSize="xl"
         disabled={!imgSrc}
-        onClick={() => setMode("sendMail")}
+        onClick={() => router.push(`/start/uploadAndSend/sendMail`)}
       >
         업로드 하기
       </Button>
-    </StartLayout>
+    </>
   );
 }

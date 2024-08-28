@@ -16,7 +16,7 @@ export default function SelectImageWithText({
 }: Props) {
   return (
     <Link
-      href={`/start/uploadImage?theme=${url}`}
+      href={`/start/uploadAndSend/uploadImage?theme=${url}`}
       style={{ textDecoration: "none" }}
     >
       <div className={styles.selectImageWithTextBox}>
