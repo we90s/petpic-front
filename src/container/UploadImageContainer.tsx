@@ -1,7 +1,7 @@
 import StartLayout from "@components/StartLayout";
 import { IMAGE_BASE_URL } from "@utils/baseUrl";
 import Image from "next/image";
-import React, { SetStateAction, useState } from "react";
+import { SetStateAction, useState } from "react";
 import styles from "@styles/page/uploadImage.module.css";
 import CHECK_ICON from "@assets/checkIcon.svg";
 import X_ICON from "@assets/xIcon.svg";

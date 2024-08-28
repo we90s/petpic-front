@@ -1,6 +1,7 @@
 "use server";
 
 import { emailSchema } from "@lib/definitions";
+import { redirect } from "next/navigation";
 
 export async function uploadImage(
   imgSrc: string,
@@ -23,10 +24,7 @@ export async function uploadImage(
   };
 
   try {
-    return {
-      success: true,
-      message: "성공",
-    };
+    redirect("/start/uploadImage/success");
   } catch (error) {
     return {
       message: "네트워크 오류",

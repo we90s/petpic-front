@@ -1,5 +1,4 @@
 import SuccessContainer, { ButtonLinkType } from "@container/SuccessContainer";
-import React from "react";
 import GoogleIcon from "@assets/btn_google.svg";
 import NaverIcon from "@assets/btn_naver.svg";
 import DaumIcon from "@assets/btn_daum.svg";

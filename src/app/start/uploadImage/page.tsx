@@ -2,7 +2,7 @@
 
 import SendMailContainer from "@container/SendMailContainer";
 import UploadImageContainer from "@container/UploadImageContainer";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function page() {
   const [imgSrc, setImgSrc] = useState<string>("");

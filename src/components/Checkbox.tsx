@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@styles/components/checkbox.module.css";
 
 type Props = {
@@ -14,7 +13,7 @@ export default function Checkbox({ id, checked, setChecked }: Props) {
         className={styles.input}
         type="checkbox"
         id={id}
-        onChange={(e) => setChecked(!checked)}
+        onChange={() => setChecked(!checked)}
         checked={checked}
       />
       <label htmlFor={id} />

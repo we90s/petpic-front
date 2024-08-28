@@ -95,7 +95,7 @@ export async function signup(prevState: FormState, formData: FormData) {
     refreshToken: data.refresh_token,
   };
 
-  await createSession(JSON.stringify(session));
+  createSession(JSON.stringify(session));
 
   return data;
 }

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import ProgressBar from "./ProgressBar";
 import styles from "@styles/components/startLayout.module.css";
 type Props = {

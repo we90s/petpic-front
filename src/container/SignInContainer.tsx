@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AuthContext } from "app/provider";
 
-export default function SignInContaier() {
+export default function SignInContainer() {
   const router = useRouter();
   const [state, action] = useFormState(signin, {
     message: "",

@@ -1,5 +1,5 @@
-import SignInContaier from "@container/SignInContainer";
+import SignInContainer from "@container/SignInContainer";
 
 export default function SignIn() {
-  return <SignInContaier />;
+  return <SignInContainer />;
 }
