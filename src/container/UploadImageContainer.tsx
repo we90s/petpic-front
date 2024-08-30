@@ -86,7 +86,7 @@ export default function UploadImageContainer() {
         theme="main"
         fontSize="xl"
         disabled={!imgSrc}
-        onClick={() => router.push(`/start/uploadAndSend/sendMail`)}
+        onClick={() => router.push(`/start/sendMail`)}
       >
         업로드 하기
       </Button>

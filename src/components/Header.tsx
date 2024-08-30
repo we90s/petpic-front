@@ -52,7 +52,8 @@ export default function Header() {
   useEffect(() => {
     if (email) {
       setIsLoggedIn(true);
-    } else {
+    }
+    if (email === "") {
       checkLoginStatus();
     }
   }, [email]);
@@ -63,27 +64,28 @@ export default function Header() {
       </Link>
       {isLoggedIn ? (
         <nav>
-          <li>
-            <Link className={styles.signIn} href="/myPage">
-              나의 앨범
-            </Link>
-          </li>
-          <li>
-            <button className={styles.signOut} onClick={signOutHandler}>
-              로그아웃
-            </button>
-          </li>
-          {/* <button className={styles.signOut} onClick={resignHandler}>
-            탈퇴
-          </button> */}
+          <ul>
+            <li>
+              <Link className={styles.signIn} href="/myPage">
+                나의 앨범
+              </Link>
+            </li>
+            <li>
+              <button className={styles.signOut} onClick={signOutHandler}>
+                로그아웃
+              </button>
+            </li>
+          </ul>
         </nav>
       ) : (
         <nav>
-          <li>
-            <Link className={styles.signIn} href="/signIn">
-              로그인
-            </Link>
-          </li>
+          <ul>
+            <li>
+              <Link className={styles.signIn} href="/signIn">
+                로그인
+              </Link>
+            </li>
+          </ul>
         </nav>
       )}
     </header>
