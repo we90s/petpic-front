@@ -15,6 +15,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
               width={280}
               height={280}
               alt="Picture of dog with flower "
+              priority
             />
           </div>
           <div className={styles.arrowBox} />
@@ -28,6 +29,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
               width={280}
               height={280}
               alt="Picture of dog in beach"
+              priority
             />
           </div>
         </div>

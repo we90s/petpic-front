@@ -1,4 +1,5 @@
 import styles from "@styles/components/button.module.css";
+import Spinner from "@assets/spinner.svg";
 
 export type ButtonType = {
   children: string | React.ReactNode;
@@ -7,6 +8,7 @@ export type ButtonType = {
   onClick?: () => void;
   type?: "submit" | "button";
   disabled?: boolean;
+  isLoading?: boolean;
 };
 
 const Button = ({
@@ -16,6 +18,7 @@ const Button = ({
   onClick,
   type,
   disabled,
+  isLoading = false,
 }: ButtonType) => {
   return (
     <button
@@ -28,7 +31,7 @@ const Button = ({
       type={type}
       onClick={onClick}
     >
-      {children}
+      {isLoading ? <Spinner /> : children}
     </button>
   );
 };

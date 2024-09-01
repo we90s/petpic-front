@@ -45,7 +45,7 @@ export async function signin(prevState: FormState, formData: FormData) {
       refreshToken: data.refresh_token,
     };
 
-    await createSession(JSON.stringify(session));
+    createSession(JSON.stringify(session));
 
     return { email: data.username };
   } catch (error) {

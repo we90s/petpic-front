@@ -1,3 +1,5 @@
+import MyPageContainer from "@container/MyPageContainer";
+
 export default function MyPage() {
-  return <div>MyPage</div>;
+  return <MyPageContainer />;
 }

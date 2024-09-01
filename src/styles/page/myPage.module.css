@@ -1,0 +1,15 @@
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.titleWrapper h1 {
+  font-size: var(--xxl);
+  color: var(--text01);
+}
+
+.titleWrapper button {
+  width: fit-content;
+}

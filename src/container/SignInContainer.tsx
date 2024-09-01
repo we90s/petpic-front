@@ -1,27 +1,24 @@
 "use client";
 
-import Button from "@components/Button";
 import Input from "@components/Input";
 import Link from "next/link";
 import styles from "@styles/page/signIn.module.css";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { signin } from "@actions/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AuthContext } from "app/provider";
+import SubmitButton from "@components/SubmitButton";
 
 export default function SignInContainer() {
   const router = useRouter();
   const [state, action] = useFormState(signin, {
     message: "",
   });
-
   const { setEmail } = useContext(AuthContext);
 
-  if (state?.email) {
-    if (setEmail) {
-      setEmail(state?.email);
-    }
+  if (state.email) {
+    setEmail(state.email);
     router.push("/");
   }
 
@@ -56,9 +53,7 @@ export default function SignInContainer() {
           <span>|</span>
           <Link href="/">비밀번호 찾기</Link>
         </div>
-        <Button type="submit" fontSize="xl" theme="main">
-          로그인
-        </Button>
+        <SubmitButton>로그인</SubmitButton>
       </form>
     </>
   );

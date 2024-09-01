@@ -77,7 +77,12 @@ export default function UploadImageContainer() {
         ) : (
           <>
             <label htmlFor="file">이미지 가져오기</label>
-            <input onChange={handleImageUpload} type="file" id="file" />
+            <input
+              onChange={handleImageUpload}
+              type="file"
+              id="file"
+              accept=".jpg, .jpeg, .png"
+            />
             <div>드래그로도 선택 가능해요</div>
           </>
         )}

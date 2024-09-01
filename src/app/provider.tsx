@@ -3,8 +3,8 @@
 import { SetStateAction, createContext, useState } from "react";
 
 interface AuthContextType {
-  email?: string;
-  setEmail?: React.Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: React.Dispatch<SetStateAction<string>>;
 }
 
 interface ImgSrcContextType {
@@ -12,7 +12,10 @@ interface ImgSrcContextType {
   setImgSrc: React.Dispatch<SetStateAction<string>>;
 }
 
-export const AuthContext = createContext<AuthContextType>({});
+export const AuthContext = createContext<AuthContextType>({
+  email: "",
+  setEmail: () => {},
+});
 export const ImgSrcContext = createContext<ImgSrcContextType>({
   imgSrc: "",
   setImgSrc: () => {},

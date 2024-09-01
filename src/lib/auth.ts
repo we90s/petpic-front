@@ -75,11 +75,19 @@ export async function signOut() {
   }
 }
 
-export async function checkAuthStatus() {
+interface AuthResponse {
+  success: boolean;
+  message?: string;
+  email?: string;
+  error?: unknown | string;
+}
+
+export async function checkAuthStatus(): Promise<AuthResponse> {
   const session = getSession();
 
   if (!session.success) {
     return {
+      success: false,
       error: "로그인 되어있지 않음",
     };
   }
@@ -94,6 +102,9 @@ export async function checkAuthStatus() {
         },
       }
     );
+
+    const username = await validateAccessTokenResponse.text();
+
     if (!validateAccessTokenResponse.ok) {
       const newAccessTokenResponse = await fetch(
         `${process.env.BASE_URL}/auth/refresh-token`,
@@ -106,6 +117,7 @@ export async function checkAuthStatus() {
       );
 
       if (!newAccessTokenResponse.ok) {
+        deleteSession();
         return {
           success: false,
           message: "refreshToken이 잘못된걸지도?",
@@ -129,6 +141,7 @@ export async function checkAuthStatus() {
 
     return {
       success: true,
+      email: username,
     };
   } catch (error) {
     return { success: false, error };

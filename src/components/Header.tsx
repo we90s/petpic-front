@@ -11,12 +11,16 @@ import { checkAuthStatus, resign, signOut } from "@lib/auth";
 export default function Header() {
   const router = useRouter();
   const { email, setEmail } = useContext(AuthContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const checkLoginStatus = async () => {
+    if (email) {
+      setIsLoggedIn(true);
+      return;
+    }
     const data = await checkAuthStatus();
     if (data.success) {
-      if (setEmail) {
+      if (data.email) {
         setEmail(data.email);
       }
       setIsLoggedIn(true);
@@ -27,36 +31,17 @@ export default function Header() {
 
   const signOutHandler = async () => {
     const data = await signOut();
-    if (!data.success) {
-      return;
-    }
-    setIsLoggedIn(false);
-    if (setEmail) {
-      setEmail("");
-    }
-    router.push("/");
-  };
-
-  const resignHandler = async () => {
-    const data = await resign();
-    if (!data.success) {
-      return;
-    }
-    setIsLoggedIn(false);
-    if (setEmail) {
+    if (data.success) {
+      setIsLoggedIn(false);
       setEmail("");
     }
     router.push("/");
   };
 
   useEffect(() => {
-    if (email) {
-      setIsLoggedIn(true);
-    }
-    if (email === "") {
-      checkLoginStatus();
-    }
+    checkLoginStatus();
   }, [email]);
+
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -67,7 +52,7 @@ export default function Header() {
           <ul>
             <li>
               <Link className={styles.signIn} href="/myPage">
-                나의 앨범
+                마이페이지
               </Link>
             </li>
             <li>
