@@ -128,3 +128,35 @@ export async function signOut() {
     redirect("/");
   }
 }
+
+export async function resign() {
+  let redirectPath: string | null = null;
+  const session = getSession();
+
+  if (!session.success) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/auth/resign`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    deleteSession();
+    revalidatePath("/", "layout");
+    redirectPath = "/resign";
+  } catch (error) {
+    throw new Error("네트워크 오류");
+  } finally {
+    if (redirectPath) {
+      redirect(redirectPath);
+    }
+  }
+}
