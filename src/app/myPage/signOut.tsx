@@ -11,15 +11,17 @@ export default function SignOutButton() {
   const { setEmail } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const resignHandler = async () => {
-    setIsLoading(true);
-    const data = await resign();
-    if (!data.success) {
+    if (confirm("정말 탈퇴하시겠습니까?")) {
+      setIsLoading(true);
+      const data = await resign();
+      if (!data.success) {
+        setIsLoading(false);
+        return;
+      }
       setIsLoading(false);
-      return;
+      setEmail("");
+      router.push("/resign");
     }
-    setIsLoading(false);
-    setEmail("");
-    router.push("/resign");
   };
   return (
     <>

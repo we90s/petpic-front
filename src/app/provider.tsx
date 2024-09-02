@@ -16,6 +16,7 @@ export const AuthContext = createContext<AuthContextType>({
   email: "",
   setEmail: () => {},
 });
+
 export const ImgSrcContext = createContext<ImgSrcContextType>({
   imgSrc: "",
   setImgSrc: () => {},
@@ -34,13 +35,16 @@ export function ImgSrcProvider({ children }: { children: React.ReactNode }) {
 
 export default function AuthProvider({
   children,
+  initialEmail,
 }: {
   children: React.ReactNode;
+  initialEmail?: string;
 }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(initialEmail ? initialEmail : "");
   const value = {
     email,
     setEmail,
   };
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

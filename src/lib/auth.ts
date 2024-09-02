@@ -1,6 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createSession, deleteSession, getSession } from "./session";
+import { redirect } from "next/navigation";
 
 export async function getAuthenticationCode(email: string) {
   try {
@@ -47,35 +49,7 @@ export async function checkAuthenticationCode(email: string, authCode: string) {
   }
 }
 
-export async function signOut() {
-  const session = getSession();
-
-  if (!session.success) {
-    return { error: "로그인 중이 아닙니다!" };
-  }
-  try {
-    const response = await fetch(`${process.env.BASE_URL}/auth/logout`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${session.accessToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      return {
-        error: "로그아웃 실패",
-      };
-    }
-
-    deleteSession();
-
-    return { success: true };
-  } catch (error) {
-    return { error: "인증메일 보내기 실패" };
-  }
-}
-
-interface AuthResponse {
+export interface AuthResponse {
   success: boolean;
   message?: string;
   email?: string;

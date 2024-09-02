@@ -1,53 +1,16 @@
-"use client";
-
 import Link from "next/link";
 import LOGO from "@assets/logo.svg";
 import styles from "@styles/components/header.module.css";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "app/provider";
-import { useRouter } from "next/navigation";
-import { checkAuthStatus, resign, signOut } from "@lib/auth";
+import { AuthResponse } from "@lib/auth";
+import { signOut } from "@actions/auth";
 
-export default function Header() {
-  const router = useRouter();
-  const { email, setEmail } = useContext(AuthContext);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  const checkLoginStatus = async () => {
-    if (email) {
-      setIsLoggedIn(true);
-      return;
-    }
-    const data = await checkAuthStatus();
-    if (data.success) {
-      if (data.email) {
-        setEmail(data.email);
-      }
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  };
-
-  const signOutHandler = async () => {
-    const data = await signOut();
-    if (data.success) {
-      setIsLoggedIn(false);
-      setEmail("");
-    }
-    router.push("/");
-  };
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, [email]);
-
+export default function Header({ authData }: { authData: AuthResponse }) {
   return (
     <header className={styles.header}>
       <Link href="/">
         <LOGO />
       </Link>
-      {isLoggedIn ? (
+      {authData.success ? (
         <nav>
           <ul>
             <li>
@@ -56,9 +19,9 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <button className={styles.signOut} onClick={signOutHandler}>
-                로그아웃
-              </button>
+              <form action={signOut}>
+                <button className={styles.signOut}>로그아웃</button>
+              </form>
             </li>
           </ul>
         </nav>

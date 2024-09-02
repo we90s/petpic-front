@@ -1,4 +1,3 @@
-import Button from "@components/Button";
 import styles from "@styles/page/myPage.module.css";
 import SignOutButton from "app/myPage/signOut";
 
