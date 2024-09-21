@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 RUN yarn install
 # Install dependencies based on the preferred package manager
 COPY package.json  ./
-RUN yarn --frozen-lockfile --production;
+
 RUN rm -rf ./.next/cache
 
 # Rebuild the source code only when needed
