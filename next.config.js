@@ -21,6 +21,12 @@ const nextConfig = {
   },
 };
 
-module.exports = {
-  output: "standalone",
+module.exports = (phase, { defaultConfig }) => {
+ 
+  const nextConfig = {
+      output: "standalone",
+    /* config options here */
+  }
+  return nextConfig;
 };
+
