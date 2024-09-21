@@ -22,8 +22,5 @@ const nextConfig = {
 };
 
 module.exports = {
-  ...nextConfig,
-  experimental: {
-    output: "standalone",
-  },
+  output: "standalone",
 };
