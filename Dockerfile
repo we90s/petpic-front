@@ -22,7 +22,7 @@ RUN rm -rf ./.next/cache
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /usr/src/app/node_modules ./node_modules
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
