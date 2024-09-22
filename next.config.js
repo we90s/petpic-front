@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "pet-pic.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+    ],
+  },
   reactStrictMode: false,
   poweredByHeader: false,
   eslint: {
@@ -7,9 +16,6 @@ const nextConfig = {
   },
   compiler: {
     styledComponents: true,
-  },
-  images: {
-    domains: ["pet-pic.s3.ap-northeast-2.amazonaws.com"],
   },
   webpack(config) {
     config.module.rules.push({
@@ -19,14 +25,9 @@ const nextConfig = {
 
     return config;
   },
+  output: "standalone", // 추가된 설정
 };
 
 module.exports = (phase, { defaultConfig }) => {
- 
-  const nextConfig = {
-      output: "standalone",
-    /* config options here */
-  }
-  return nextConfig;
+  return nextConfig; // 통합된 설정 반환
 };
-
