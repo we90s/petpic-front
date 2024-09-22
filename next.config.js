@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "pet-pic.s3.ap-northeast-2.amazonaws.com",
+        hostname: "storage.googleapis.com",
         pathname: "/**",
       },
     ],
@@ -28,6 +28,4 @@ const nextConfig = {
   output: "standalone", // 추가된 설정
 };
 
-module.exports = (phase, { defaultConfig }) => {
-  return nextConfig; // 통합된 설정 반환
-};
+module.exports = nextConfig; // 통합된 설정 반환
