@@ -1,0 +1,10 @@
+.github
+.git
+.idea
+.next
+.gitignore
+node_modules
+npm-debug.log
+Dockerfile
+README.md
+coverage
