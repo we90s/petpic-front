@@ -4,7 +4,7 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 import { useInput } from "@hooks/useInput";
 import styles from "@styles/page/signUp.module.css";
-import { signup } from "actions/auth";
+import { signUp } from "actions/auth";
 import { emailSchema } from "@lib/definitions";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -16,7 +16,8 @@ import SubmitButton from "@components/SubmitButton";
 
 export default function SignUpContainer() {
   const router = useRouter();
-  const [state, action] = useFormState(signup, {
+  const [state, action] = useFormState(signUp, {
+    email: undefined,
     message: "",
   });
   const { setEmail } = useContext(AuthContext);
@@ -64,8 +65,8 @@ export default function SignUpContainer() {
     }
   };
 
-  if (state?.username) {
-    setEmail(state?.username);
+  if (state?.email) {
+    setEmail(state?.email);
     router.push("/signUp/success");
   }
 
@@ -119,16 +120,16 @@ export default function SignUpContainer() {
         label="비밀번호"
         name="password"
         placeholder="최소 6자 이상 입력"
-        isError={state?.errors?.password}
-        errorLabel={state?.errors?.password}
+        isError={state?.type === "password"}
+        errorLabel={state?.message}
       />
       <Input
         type="password"
         label="비밀번호 확인"
         placeholder="비밀번호 확인"
         name="passwordCheck"
-        isError={state?.errors?.passwordCheck}
-        errorLabel={state?.errors?.passwordCheck}
+        isError={state?.type === "passwordCheck"}
+        errorLabel={state?.message}
       />
       <SubmitButton disabled={isValidAuthCode !== true}>가입하기</SubmitButton>
     </form>

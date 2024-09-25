@@ -4,7 +4,7 @@ import Input from "@components/Input";
 import Link from "next/link";
 import styles from "@styles/page/signIn.module.css";
 import { useFormState, useFormStatus } from "react-dom";
-import { signin } from "@actions/auth";
+import { signIn } from "@actions/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AuthContext } from "app/provider";
@@ -12,7 +12,8 @@ import SubmitButton from "@components/SubmitButton";
 
 export default function SignInContainer() {
   const router = useRouter();
-  const [state, action] = useFormState(signin, {
+  const [state, action] = useFormState(signIn, {
+    email: "",
     message: "",
   });
   const { setEmail } = useContext(AuthContext);
@@ -21,7 +22,6 @@ export default function SignInContainer() {
     setEmail(state.email);
     router.push("/");
   }
-
   return (
     <>
       <div className={styles.h1}>
@@ -36,16 +36,16 @@ export default function SignInContainer() {
           type="email"
           name="email"
           placeholder="이메일을 입력해 주세요"
-          isError={state?.message !== ""}
+          isError={state?.type === "email" || state?.type === "fail"}
           errorLabel={state?.message}
-          required
         />
         <Input
           type="password"
           id="password"
           name="password"
           placeholder="비밀번호를 입력해 주세요"
-          required
+          isError={state?.type === "password"}
+          errorLabel={state?.message}
         />
         <div className={styles.subText}>
           아직 회원이 아니신가요?

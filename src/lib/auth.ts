@@ -3,26 +3,25 @@
 import { revalidatePath } from "next/cache";
 import { createSession, deleteSession, getSession } from "./session";
 import { redirect } from "next/navigation";
+import { RequestConfig, fetchAPI } from "@utils/fetchAPI";
 
 export async function getAuthenticationCode(email: string) {
-  try {
-    const response = await fetch(`${process.env.BASE_URL}/signup/mail`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      body: email,
-    });
+  const apiParams: RequestConfig<string> = {
+    type: "text",
+    url: "/signup/mail",
+    method: "POST",
+    body: email,
+    message: "이미 등록된 이메일입니다.",
+  };
 
-    if (response.status === 409) {
-      return {
-        error: "이미 등록된 이메일입니다.",
-      };
-    }
-    return { success: true };
-  } catch (error) {
-    return { error: "인증메일 보내기 실패" };
+  const { message, status } = await fetchAPI(apiParams);
+
+  if (status === 409) {
+    return {
+      message,
+    };
   }
+  return { success: true };
 }
 
 export async function checkAuthenticationCode(email: string, authCode: string) {
@@ -32,21 +31,26 @@ export async function checkAuthenticationCode(email: string, authCode: string) {
     code: authCode,
   };
 
-  try {
-    const response = await fetch(`${process.env.BASE_URL}/signup/validate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    if (!response.ok) {
-      return { error: "잘못된 인증코드" };
-    }
-    return { success: true };
-  } catch (error) {
-    return { error: "인증코드 확인 api 실패" };
+  const apiParams: RequestConfig<typeof body> = {
+    type: "json",
+    url: "/signup/validate",
+    method: "POST",
+    body: body,
+    message: "잘못된 인증 코드입니다.",
+  };
+
+  const { message, status } = await fetchAPI(apiParams);
+
+  if (status === 0) {
+    // 다른 로직
+    return { message };
   }
+
+  if (status >= 500) {
+    return { message };
+  }
+
+  return { success: true };
 }
 
 export interface AuthResponse {
@@ -66,91 +70,56 @@ export async function checkAuthStatus(): Promise<AuthResponse> {
     };
   }
 
-  try {
-    const validateAccessTokenResponse = await fetch(
-      `${process.env.BASE_URL}/auth/validate`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${session.accessToken}`,
-        },
-      }
-    );
+  const accessParams: RequestConfig<string> = {
+    url: "/auth/validate",
+    method: "GET",
+    token: session.accessToken,
+  };
 
-    const username = await validateAccessTokenResponse.text();
+  const { data: accessData, status } = await fetchAPI(accessParams);
 
-    if (!validateAccessTokenResponse.ok) {
-      const newAccessTokenResponse = await fetch(
-        `${process.env.BASE_URL}/auth/refresh-token`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session.refreshToken}`,
-          },
-        }
-      );
+  const username = accessData;
 
-      if (!newAccessTokenResponse.ok) {
-        deleteSession();
-        return {
-          success: false,
-          message: "refreshToken이 잘못된걸지도?",
-        };
-      }
-
-      const data = await newAccessTokenResponse.json();
-
-      const newSession = {
-        accessToken: data.access_token,
-        refreshToken: data.refresh_token,
-      };
-
-      createSession(JSON.stringify(newSession));
-
-      return {
-        success: true,
-        email: data.username,
-      };
-    }
-
-    return {
-      success: true,
-      email: username,
-    };
-  } catch (error) {
-    return { success: false, error };
-  }
-}
-
-export async function resign() {
-  const session = getSession();
-
-  if (!session.success) {
-    return {
-      error: "로그인 되어있지 않음",
-    };
-  }
-
-  try {
-    const response = await fetch(`${process.env.BASE_URL}/auth/resign`, {
+  if (status >= 500) {
+    const refreshParams: RequestConfig<string> = {
+      type: "json",
+      url: "/auth/refresh-token",
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${session.accessToken}`,
-      },
-    });
+      token: session.refreshToken,
+    };
 
-    if (!response.ok) {
+    const { data: refreshData, status } = await fetchAPI(refreshParams);
+
+    if (status === 0) {
+      // 네트워크 오류
       return {
-        error: "회원 탈퇴 실패",
+        success: false,
       };
     }
 
-    deleteSession();
+    if (status >= 500) {
+      deleteSession();
+      return {
+        success: false,
+        message: "refreshToken이 잘못된걸지도?",
+      };
+    }
+
+    const newSession = {
+      accessToken: refreshData.access_token,
+      refreshToken: refreshData.refresh_token,
+    };
+
+    createSession(JSON.stringify(newSession));
 
     return {
       success: true,
+      email: refreshData.username,
     };
-  } catch (error) {
-    return { success: false, error };
   }
+
+  return {
+    success: true,
+    email: username,
+  };
 }
