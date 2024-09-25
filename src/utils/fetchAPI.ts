@@ -7,14 +7,20 @@ export interface RequestConfig<T> {
   message?: string;
 }
 
-export async function fetchAPI<T>({
+export interface ApiResponse<R> {
+  data?: R;
+  status: number;
+  message: string;
+}
+
+export async function fetchAPI<T, R>({
   type,
   url,
   method,
   body,
   token,
   message,
-}: RequestConfig<T>) {
+}: RequestConfig<T>): Promise<ApiResponse<R>> {
   const headers: HeadersInit = {};
 
   if (method !== "GET" && type) {
@@ -33,20 +39,22 @@ export async function fetchAPI<T>({
       body: body ? JSON.stringify(body) : null,
     });
 
-    let data;
+    let data: R;
+
+    if (!response.ok) {
+      return { message: message || "요청 실패", status: response.status };
+    }
 
     if (method === "GET") {
-      data = await response.text();
+      const textResponse = await response.text();
+      data = JSON.parse(textResponse) as R; // 텍스트를 JSON으로 변환
     } else {
       data = await response.json();
     }
 
-    if (!response.ok) {
-      return { message: message, status: response.status };
-    }
-
     return { data, status: response.status, message: "" };
   } catch (error) {
+    // 네트워크 오류인 경우 status code를 0으로 설정
     return { message: "네트워크 오류", status: 0 };
   }
 }

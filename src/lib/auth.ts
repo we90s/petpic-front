@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { createSession, deleteSession, getSession } from "./session";
 import { redirect } from "next/navigation";
-import { RequestConfig, fetchAPI } from "@utils/fetchAPI";
+import { ApiResponse, RequestConfig, fetchAPI } from "@utils/fetchAPI";
+import { AuthResponse, AuthStatusResponse } from "@petpicTypes/authResponse";
 
 export async function getAuthenticationCode(email: string) {
   const apiParams: RequestConfig<string> = {
@@ -53,20 +54,13 @@ export async function checkAuthenticationCode(email: string, authCode: string) {
   return { success: true };
 }
 
-export interface AuthResponse {
-  success: boolean;
-  message?: string;
-  email?: string;
-  error?: unknown | string;
-}
-
-export async function checkAuthStatus(): Promise<AuthResponse> {
+export async function checkAuthStatus(): Promise<AuthStatusResponse> {
   const session = getSession();
 
   if (!session.success) {
     return {
       success: false,
-      error: "로그인 되어있지 않음",
+      message: "로그인 되어있지 않음",
     };
   }
 
@@ -76,7 +70,9 @@ export async function checkAuthStatus(): Promise<AuthResponse> {
     token: session.accessToken,
   };
 
-  const { data: accessData, status } = await fetchAPI(accessParams);
+  const { data: accessData, status }: ApiResponse<string> = await fetchAPI(
+    accessParams
+  );
 
   const username = accessData;
 
@@ -88,16 +84,21 @@ export async function checkAuthStatus(): Promise<AuthResponse> {
       token: session.refreshToken,
     };
 
-    const { data: refreshData, status } = await fetchAPI(refreshParams);
+    const {
+      data: refreshData,
+      status,
+      message,
+    }: ApiResponse<AuthResponse> = await fetchAPI(refreshParams);
 
     if (status === 0) {
       // 네트워크 오류
       return {
         success: false,
+        message,
       };
     }
 
-    if (status >= 500) {
+    if (status >= 500 || refreshData === undefined) {
       deleteSession();
       return {
         success: false,

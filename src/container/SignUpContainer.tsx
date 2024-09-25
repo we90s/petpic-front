@@ -17,6 +17,7 @@ import SubmitButton from "@components/SubmitButton";
 export default function SignUpContainer() {
   const router = useRouter();
   const [state, action] = useFormState(signUp, {
+    type: "",
     email: undefined,
     message: "",
   });

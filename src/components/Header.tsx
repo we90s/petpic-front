@@ -1,10 +1,10 @@
 import Link from "next/link";
 import LOGO from "@assets/logo.svg";
 import styles from "@styles/components/header.module.css";
-import { AuthResponse } from "@lib/auth";
 import { signOut } from "@actions/auth";
+import { AuthStatusResponse } from "@petpicTypes/authResponse";
 
-export default function Header({ authData }: { authData: AuthResponse }) {
+export default function Header({ authData }: { authData: AuthStatusResponse }) {
   return (
     <header className={styles.header}>
       <Link href="/">

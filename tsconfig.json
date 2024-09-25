@@ -24,7 +24,7 @@
       "@api/*": ["app/api/*"],
       "@lib/*": ["lib/*"],
       "@hooks/*": ["hooks/*"],
-      "@types/*": ["types/*"],
+      "@petpicTypes/*": ["types/*"],
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@assets/*": ["assets/*"],

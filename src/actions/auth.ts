@@ -7,7 +7,8 @@ import {
   SignInSchema,
 } from "@lib/definitions";
 import { createSession, deleteSession, getSession } from "@lib/session";
-import { RequestConfig, fetchAPI } from "@utils/fetchAPI";
+import { AuthResponse } from "@petpicTypes/authResponse";
+import { ApiResponse, RequestConfig, fetchAPI } from "@utils/fetchAPI";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -40,9 +41,11 @@ export async function signIn(prevState: FormState, formData: FormData) {
     message: "이메일 또는 비밀번호가 잘못되었습니다.",
   };
 
-  const { data, message, status } = await fetchAPI(apiParams);
+  const { data, message, status }: ApiResponse<AuthResponse> = await fetchAPI(
+    apiParams
+  );
 
-  if (status && status >= 500) {
+  if (status >= 500 || data === undefined) {
     return {
       type: "fail",
       message,
@@ -90,9 +93,11 @@ export async function signUp(prevState: FormState, formData: FormData) {
     message: "회원가입에 실패했습니다.",
   };
 
-  const { data, message, status } = await fetchAPI(apiParams);
+  const { data, message, status }: ApiResponse<AuthResponse> = await fetchAPI(
+    apiParams
+  );
 
-  if (status && status >= 500) {
+  if (status >= 500 || data === undefined) {
     return {
       type: "fail",
       message,
@@ -136,7 +141,6 @@ export async function signOut() {
 }
 
 export async function resign() {
-  let redirectPath: string | null = null;
   const session = getSession();
 
   if (!session.success) {
