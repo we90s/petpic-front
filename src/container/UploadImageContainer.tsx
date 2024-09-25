@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import styles from "@styles/page/uploadImage.module.css";
 import X_ICON from "@assets/xIcon.svg";
-import Button from "@components/Button";
 import { useRouter } from "next/navigation";
 import { ImgSrcContext } from "app/provider";
+import LinkButton from "@components/LinkButton";
 
 export default function UploadImageContainer() {
   const router = useRouter();
@@ -87,14 +87,9 @@ export default function UploadImageContainer() {
           </>
         )}
       </div>
-      <Button
-        theme="main"
-        fontSize="xl"
-        disabled={!imgSrc}
-        onClick={() => router.push(`/start/sendMail`)}
-      >
-        업로드 하기
-      </Button>
+      <LinkButton disabled={!imgSrc} href="/start/sendMail">
+        업로드하기
+      </LinkButton>
     </>
   );
 }

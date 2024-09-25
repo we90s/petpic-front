@@ -11,8 +11,9 @@ import { useContext, useState } from "react";
 import { useFormState } from "react-dom";
 import { checkAuthenticationCode, getAuthenticationCode } from "@lib/auth";
 import { AuthContext } from "app/provider";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import SubmitButton from "@components/SubmitButton";
+import customToast from "@components/Toast";
 
 export default function SignUpContainer() {
   const router = useRouter();
@@ -27,33 +28,14 @@ export default function SignUpContainer() {
   const [isActivateAuthCode, setIsActivateAuthCode] = useState(false);
   const [isValidAuthCode, setIsValidAuthCode] = useState<null | boolean>(null);
   const isValidEmail = emailSchema.safeParse(email).success;
-  const successNotify = () =>
-    toast.success("해당 메일로 인증번호가 발송됐습니다.", {
-      style: {
-        fontSize: "2rem",
-        lineHeight: "2.1rem",
-        color: "#191919",
-        marginTop: 20,
-      },
-    });
-
-  const errorNotify = () =>
-    toast.error("이미 등록된 이메일입니다.", {
-      style: {
-        fontSize: "2rem",
-        lineHeight: "2.1rem",
-        color: "#191919",
-        marginTop: 20,
-      },
-    });
 
   const handleSendAuthCode = async () => {
-    const data = await getAuthenticationCode(email);
-    if (data.success) {
-      successNotify();
+    const { success, message } = await getAuthenticationCode(email);
+    if (success) {
+      customToast(true, message);
       setIsActivateAuthCode(true);
     } else {
-      errorNotify();
+      customToast(true, "해당 메일로 인증번호가 발송됐습니다.");
     }
   };
 

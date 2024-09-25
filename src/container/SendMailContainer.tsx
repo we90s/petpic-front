@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "@components/Button";
 import Input from "@components/Input";
 import { useInput } from "@hooks/useInput";
 import { AuthContext, ImgSrcContext } from "app/provider";
@@ -9,6 +8,7 @@ import styles from "@styles/page/sendMail.module.css";
 import Checkbox from "@components/Checkbox";
 import { uploadImage } from "@actions/uploadImage";
 import { useFormState } from "react-dom";
+import SubmitButton from "@components/SubmitButton";
 
 function SendMailContainer() {
   const { email } = useContext(AuthContext);
@@ -41,13 +41,9 @@ function SendMailContainer() {
           <span>광고성 메일 없이 사진을 보내드리는 용도로만 사용해요.</span>
         </label>
       </div>
-      <Button
-        theme="main"
-        fontSize="xl"
-        disabled={email === "" || emailValue === "" || !isChecked}
-      >
+      <SubmitButton disabled={(!emailValue && !email) || !isChecked}>
         완료
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

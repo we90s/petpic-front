@@ -17,12 +17,17 @@ export async function getAuthenticationCode(email: string) {
 
   const { message, status } = await fetchAPI(apiParams);
 
+  if (status === 0) {
+    return {
+      message,
+    };
+  }
   if (status === 409) {
     return {
       message,
     };
   }
-  return { success: true };
+  return { success: true, message: "해당 메일로 인증번호가 발송됐습니다." };
 }
 
 export async function checkAuthenticationCode(email: string, authCode: string) {

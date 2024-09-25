@@ -1,8 +1,7 @@
-import Button from "@components/Button";
-import Link from "next/link";
 import Image from "next/image";
 import { IMAGE_BASE_URL } from "@utils/baseUrl";
 import styles from "@styles/page/home.module.css";
+import LinkButton from "@components/LinkButton";
 
 export default function Main() {
   return (
@@ -35,11 +34,7 @@ export default function Main() {
             />
           </div>
         </div>
-        <Link href={"/start"}>
-          <Button theme="main" fontSize="xl">
-            시작하기
-          </Button>
-        </Link>
+        <LinkButton href={"/start"}>시작하기</LinkButton>
       </main>
     </>
   );

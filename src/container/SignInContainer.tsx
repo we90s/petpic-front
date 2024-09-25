@@ -3,7 +3,7 @@
 import Input from "@components/Input";
 import Link from "next/link";
 import styles from "@styles/page/signIn.module.css";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { signIn } from "@actions/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
