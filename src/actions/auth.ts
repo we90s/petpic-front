@@ -1,11 +1,6 @@
 "use server";
 
-import {
-  SignUpFormSchema,
-  emailSchema,
-  FormState,
-  SignInSchema,
-} from "@lib/definitions";
+import { SignUpFormSchema, FormState, SignInSchema } from "@lib/definitions";
 import { createSession, deleteSession, getSession } from "@lib/session";
 import { AuthResponse } from "@petpicTypes/authResponse";
 import { ApiResponse, RequestConfig, fetchAPI } from "@utils/fetchAPI";
@@ -55,11 +50,11 @@ export async function signIn(prevState: FormState, formData: FormData) {
   const session = {
     accessToken: data.access_token,
     refreshToken: data.refresh_token,
+    email: data.username,
   };
 
   createSession(JSON.stringify(session));
-
-  return { email: data.username, message };
+  redirect("/");
 }
 
 export async function signUp(prevState: FormState, formData: FormData) {
@@ -111,7 +106,7 @@ export async function signUp(prevState: FormState, formData: FormData) {
 
   createSession(JSON.stringify(session));
 
-  return { email: data.username, message };
+  redirect("/signUp/success");
 }
 
 export async function signOut() {

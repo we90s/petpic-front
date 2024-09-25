@@ -7,10 +7,9 @@ import styles from "@styles/page/signUp.module.css";
 import { signUp } from "actions/auth";
 import { emailSchema } from "@lib/definitions";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useFormState } from "react-dom";
 import { checkAuthenticationCode, getAuthenticationCode } from "@lib/auth";
-import { AuthContext } from "app/provider";
 import { Toaster } from "react-hot-toast";
 import SubmitButton from "@components/SubmitButton";
 import customToast from "@components/Toast";
@@ -19,10 +18,8 @@ export default function SignUpContainer() {
   const router = useRouter();
   const [state, action] = useFormState(signUp, {
     type: "",
-    email: undefined,
     message: "",
   });
-  const { setEmail } = useContext(AuthContext);
   const { input: email, onChange: onChangeEmail } = useInput("");
   const { input: authCode, onChange: onChangeAuthCode } = useInput("");
   const [isActivateAuthCode, setIsActivateAuthCode] = useState(false);
@@ -47,11 +44,6 @@ export default function SignUpContainer() {
       setIsValidAuthCode(false);
     }
   };
-
-  if (state?.email) {
-    setEmail(state?.email);
-    router.push("/signUp/success");
-  }
 
   return (
     <form action={action} className={styles.form}>

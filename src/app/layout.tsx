@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import "@styles/global.css";
 import Container from "@components/Container";
 import Header from "@components/Header";
-import AuthProvider from "./provider";
 import { checkAuthStatus } from "@lib/auth";
 import { PublicEnvScript } from "next-runtime-env";
 
@@ -23,10 +22,8 @@ export default async function RootLayout({
         <PublicEnvScript />
       </head>
       <body>
-        <AuthProvider initialEmail={authData.email}>
-          <Header authData={authData} />
-          <Container>{children}</Container>
-        </AuthProvider>
+        <Header authData={authData} />
+        <Container>{children}</Container>
       </body>
     </html>
   );

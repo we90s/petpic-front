@@ -1,5 +1,7 @@
 import SendMailContainer from "@container/SendMailContainer";
+import { getEmail } from "@lib/session";
 
 export default function SendMail() {
-  return <SendMailContainer />;
+  const email = getEmail();
+  return <SendMailContainer email={email} />;
 }

@@ -45,6 +45,16 @@ export function getSession() {
   };
 }
 
+export function getEmail(): string {
+  const cookie = cookies().get("session")?.value;
+  if (!cookie) {
+    return "";
+  }
+  const { email } = JSON.parse(cookie);
+
+  return email;
+}
+
 export function deleteSession() {
   cookies().delete("session");
 }

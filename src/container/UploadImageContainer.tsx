@@ -4,12 +4,10 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import styles from "@styles/page/uploadImage.module.css";
 import X_ICON from "@assets/xIcon.svg";
-import { useRouter } from "next/navigation";
 import { ImgSrcContext } from "app/provider";
 import LinkButton from "@components/LinkButton";
 
 export default function UploadImageContainer() {
-  const router = useRouter();
   const { imgSrc, setImgSrc } = useContext(ImgSrcContext);
   const [isDragging, setIsDragging] = useState(false);
   const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {

@@ -2,7 +2,7 @@
 
 import Input from "@components/Input";
 import { useInput } from "@hooks/useInput";
-import { AuthContext, ImgSrcContext } from "app/provider";
+import { ImgSrcContext } from "app/provider";
 import { useContext, useState } from "react";
 import styles from "@styles/page/sendMail.module.css";
 import Checkbox from "@components/Checkbox";
@@ -10,13 +10,10 @@ import { uploadImage } from "@actions/uploadImage";
 import { useFormState } from "react-dom";
 import SubmitButton from "@components/SubmitButton";
 
-function SendMailContainer() {
-  const { email } = useContext(AuthContext);
+function SendMailContainer({ email }: { email: string }) {
   const { imgSrc } = useContext(ImgSrcContext);
   const [isChecked, setIsChecked] = useState(false);
-  const { input: emailValue, onChange: onChangeNewEmail } = useInput(
-    email || ""
-  );
+  const { input: emailValue, onChange: onChangeNewEmail } = useInput(email);
   const [state, action] = useFormState(uploadImage.bind(null, ""), {
     message: "",
   });
