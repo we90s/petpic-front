@@ -12,7 +12,7 @@ import { useFormState } from "react-dom";
 import { checkAuthenticationCode, getAuthenticationCode } from "@lib/auth";
 import { Toaster } from "react-hot-toast";
 import SubmitButton from "@components/SubmitButton";
-import customToast from "@components/Toast";
+import customToast from "@lib/customToast";
 
 export default function SignUpContainer() {
   const router = useRouter();
