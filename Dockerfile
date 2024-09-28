@@ -54,7 +54,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 빌드된 자원 복사
-COPY --from=builder /app/public ./public
+#COPY --from=builder /app/public ./public
 
 # .next 디렉토리 권한 설정
 RUN mkdir .next
