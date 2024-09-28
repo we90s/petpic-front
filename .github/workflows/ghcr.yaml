@@ -56,5 +56,5 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         
     - name: Deploy new container
-      run: kubectl -n petpic set image deployments/petpic-front=ghcr.io/we90s/petpic-front:${{ github.sha }}
+      run: kubectl -n petpic set image deployments/petpic-front petpic-front=ghcr.io/we90s/petpic-front:${{ github.sha }}
       
