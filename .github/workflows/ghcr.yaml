@@ -40,7 +40,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
       with:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
-        project_id: ${{ secrets.GKE_PROJECT }}
+        project_id: ${{ env.PROJECT_ID }}
         
     - name: get gke cred
       uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
