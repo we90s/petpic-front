@@ -1,5 +1,5 @@
 import SignUpContainer from "@container/SignUpContainer";
 
-export default function signUp() {
+export default function SignUp() {
   return <SignUpContainer />;
 }

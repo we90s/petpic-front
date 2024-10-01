@@ -3,7 +3,7 @@
 import { resign } from "@actions/auth";
 import SubmitButton from "@components/SubmitButton";
 
-export default function SignOutButton() {
+export default function ResignButton() {
   const handleResign = () => {
     if (confirm("정말 탈퇴하시겠습니까?")) {
       resign();

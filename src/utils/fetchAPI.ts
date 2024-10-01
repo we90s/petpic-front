@@ -1,11 +1,13 @@
 export interface RequestConfig<T> {
   url: string;
   method: "POST" | "GET" | "PUT" | "DELETE";
-  type?: "json" | "text";
+  type?: "json" | "text"; // 필요없음
   body?: T;
-  token?: string;
+  token?: string; // 그냥 함수 내에서 처리
   message?: string;
 }
+// 겟 파라미터 처리 추가
+// 캐시관련 추가
 
 export interface ApiResponse<R> {
   data?: R;

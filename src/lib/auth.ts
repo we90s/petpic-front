@@ -14,7 +14,7 @@ export async function getAuthenticationCode(email: string) {
     body: email,
     message: "이미 등록된 이메일입니다.",
   };
-
+  // 백엔드에 에러메시지 추가
   const { message, status } = await fetchAPI(apiParams);
 
   if (status === 0) {

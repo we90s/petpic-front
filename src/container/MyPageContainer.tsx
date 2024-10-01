@@ -1,5 +1,5 @@
 import styles from "@styles/page/myPage.module.css";
-import SignOutButton from "app/myPage/signOut";
+import ResignButton from "@components/ResignButton";
 
 export default function MyPageContainer() {
   return (
@@ -10,7 +10,7 @@ export default function MyPageContainer() {
       <div className={styles.titleWrapper}>
         <h1>탈퇴 하기</h1>
       </div>
-      <SignOutButton />
+      <ResignButton />
     </>
   );
 }

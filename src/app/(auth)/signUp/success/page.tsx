@@ -1,6 +1,6 @@
 import SuccessContainer from "@container/SuccessContainer";
 
-export default function signUp() {
+export default function SignUpSuccess() {
   return (
     <SuccessContainer
       title="가입이 완료되었습니다"
