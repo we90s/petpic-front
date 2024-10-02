@@ -70,27 +70,27 @@ export default function SignUpContainer() {
           인증번호 받기
         </Button>
       </div>
-      {/* {isActivateAuthCode && ( */}
-      <div className={styles.authWrapper}>
-        <Input
-          onChange={onChangeAuthCode}
-          type="text"
-          label="인증번호"
-          placeholder="인증번호 입력"
-          value={authCode}
-          isError={isValidAuthCode === false}
-          errorLabel="인증번호를 확인해주세요"
-        />
-        <button
-          className={styles.authButton}
-          type="button"
-          disabled={isValidAuthCode === true}
-          onClick={handleCheckAuthCode}
-        >
-          {isValidAuthCode === true ? "인증완료" : "인증하기"}
-        </button>
-      </div>
-      {/* )} */}
+      {isActivateAuthCode && (
+        <div className={styles.authWrapper}>
+          <Input
+            onChange={onChangeAuthCode}
+            type="text"
+            label="인증번호"
+            placeholder="인증번호 입력"
+            value={authCode}
+            isError={isValidAuthCode === false}
+            errorLabel="인증번호를 확인해주세요"
+          />
+          <button
+            className={styles.authButton}
+            type="button"
+            disabled={isValidAuthCode === true}
+            onClick={handleCheckAuthCode}
+          >
+            {isValidAuthCode === true ? "인증완료" : "인증하기"}
+          </button>
+        </div>
+      )}
       <Input
         type="password"
         label="비밀번호"
