@@ -28,33 +28,26 @@ export async function signIn(prevState: FormState, formData: FormData) {
   };
 
   const apiParams: RequestConfig<typeof body> = {
-    type: "json",
-    url: "/auth/authenticate",
+    path: "/auth/authenticate",
     method: "POST",
     body: body,
-    token: undefined,
-    message: "이메일 또는 비밀번호가 잘못되었습니다.",
   };
 
-  const { data, message, status }: ApiResponse<AuthResponse> = await fetchAPI(
-    apiParams
-  );
+  const { data, status }: ApiResponse<AuthResponse> = await fetchAPI(apiParams);
 
-  if (status >= 500 || data === undefined) {
-    return {
-      type: "fail",
-      message,
-    };
+  if (status >= 400 && status < 500) {
+    return { type: "fail", message: "이메일이나 비밀번호가 잘못되었습니다." };
   }
 
-  const session = {
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token,
-    email: data.username,
-  };
-
-  createSession(JSON.stringify(session));
-  redirect("/");
+  if (data) {
+    const session = {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      email: data.username,
+    };
+    createSession(JSON.stringify(session));
+    redirect("/");
+  }
 }
 
 export async function signUp(prevState: FormState, formData: FormData) {
@@ -80,33 +73,23 @@ export async function signUp(prevState: FormState, formData: FormData) {
   };
 
   const apiParams: RequestConfig<typeof body> = {
-    type: "json",
-    url: "/auth/register",
+    path: "/auth/register",
     method: "POST",
     body: body,
-    token: undefined,
-    message: "회원가입에 실패했습니다.",
   };
 
-  const { data, message, status }: ApiResponse<AuthResponse> = await fetchAPI(
-    apiParams
-  );
+  const { data, status }: ApiResponse<AuthResponse> = await fetchAPI(apiParams);
 
-  if (status >= 500 || data === undefined) {
-    return {
-      type: "fail",
-      message,
+  if (data) {
+    const session = {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
     };
+
+    createSession(JSON.stringify(session));
+
+    redirect("/signUp/success");
   }
-
-  const session = {
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token,
-  };
-
-  createSession(JSON.stringify(session));
-
-  redirect("/signUp/success");
 }
 
 export async function signOut() {
@@ -117,22 +100,17 @@ export async function signOut() {
   }
 
   const apiParams: RequestConfig<undefined> = {
-    type: "json",
-    url: "/auth/logout",
+    path: "/auth/logout",
     method: "POST",
-    token: session.accessToken,
-    message: "로그아웃에 실패했습니다.",
   };
 
   const { status } = await fetchAPI(apiParams);
 
-  if (status && status >= 500) {
-    return;
+  if (status === 200) {
+    deleteSession();
+    revalidatePath("/", "layout");
+    redirect("/");
   }
-
-  deleteSession();
-  revalidatePath("/", "layout");
-  redirect("/");
 }
 
 export async function resign() {
@@ -143,11 +121,8 @@ export async function resign() {
   }
 
   const apiParams: RequestConfig<undefined> = {
-    type: "json",
-    url: "/auth/resign",
+    path: "/auth/resign",
     method: "POST",
-    token: session.accessToken,
-    message: "회원 탈퇴에 실패했습니다.",
   };
 
   const { status } = await fetchAPI(apiParams);

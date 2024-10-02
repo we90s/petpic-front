@@ -1,62 +1,71 @@
+import { getSession } from "@lib/session";
+
 export interface RequestConfig<T> {
-  url: string;
+  path: string;
   method: "POST" | "GET" | "PUT" | "DELETE";
-  type?: "json" | "text"; // 필요없음
   body?: T;
-  token?: string; // 그냥 함수 내에서 처리
-  message?: string;
+  options?: HeadersInit;
 }
 // 겟 파라미터 처리 추가
 // 캐시관련 추가
 
 export interface ApiResponse<R> {
-  data?: R;
+  data?: R | null;
   status: number;
-  message: string;
+  message?: string;
 }
 
 export async function fetchAPI<T, R>({
-  type,
-  url,
+  path,
   method,
   body,
-  token,
-  message,
+  options,
 }: RequestConfig<T>): Promise<ApiResponse<R>> {
+  let url = process.env.BASE_URL + path;
+  let token = null;
   const headers: HeadersInit = {};
 
-  if (method !== "GET" && type) {
-    headers["Content-Type"] =
-      type === "json" ? "application/json" : "text/plain";
+  const session = getSession();
+
+  // 토큰 설정
+  if (session.success) {
+    token = session.accessToken;
   }
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  try {
-    const response = await fetch(`${process.env.BASE_URL}${url}`, {
-      method,
-      headers,
-      body: body ? JSON.stringify(body) : null,
-    });
-
-    let data: R;
-
-    if (!response.ok) {
-      return { message: message || "요청 실패", status: response.status };
-    }
-
-    if (method === "GET") {
-      const textResponse = await response.text();
-      data = JSON.parse(textResponse) as R; // 텍스트를 JSON으로 변환
-    } else {
-      data = await response.json();
-    }
-
-    return { data, status: response.status, message: "" };
-  } catch (error) {
-    // 네트워크 오류인 경우 status code를 0으로 설정
-    return { message: "네트워크 오류", status: 0 };
+  // 헤더 설정
+  if (typeof body === "object") {
+    headers["Content-Type"] = "application/json";
   }
+
+  if (options) {
+    Object.assign(headers, options);
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : null,
+  });
+
+  let data: R | null = null;
+
+  if (!response.ok) {
+    if (response.status >= 400 && response.status < 500) {
+      return { status: response.status, message: "잘못된 요청입니다." };
+    } else if (response.status >= 500) {
+      return { status: response.status, message: "서버 오류입니다." };
+    }
+  }
+
+  const contentType = response.headers.get("Content-Type");
+  if (contentType && contentType.includes("json")) {
+    data = await response.json();
+  } else if (contentType && contentType.includes("text")) {
+    data = (await response.text()) as unknown as R;
+  }
+  return { data, status: response.status };
 }

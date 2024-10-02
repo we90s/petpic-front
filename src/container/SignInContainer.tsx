@@ -12,7 +12,6 @@ export default function SignInContainer() {
     type: "",
     message: "",
   });
-
   return (
     <>
       <div className={styles.h1}>

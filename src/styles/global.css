@@ -151,3 +151,10 @@ table {
   text-align: center;
   font-size: var(--xxl);
 }
+
+.error {
+  text-align: center;
+  font-size: var(--xxl);
+  padding-top: 50px;
+  margin-bottom: 50px;
+}
