@@ -14,11 +14,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: "install dependencies"
-        run: npm ci
-      - name: "build"
+      - name: "access to secrets"
+        run: |
+          echo "BASE_URL=$BASE_URL" >> .env
+          echo "NEXT_PUBLIC_IMAGE_BASE_URL=$NEXT_PUBLIC_IMAGE_BASE_URL" >> .env
+          echo "AUTH_SECRET=$AUTH_SECRET" >> .env
         env:
           BASE_URL: ${{ secrets.API_BASE_URL }}
           NEXT_PUBLIC_IMAGE_BASE_URL: ${{ secrets.IMAGE_BASE_URL }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET}}
+
+      - name: "install dependencies"
+        run: npm ci
+
+      - name: "build"
         run: npm run build
