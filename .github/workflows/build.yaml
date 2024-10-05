@@ -24,6 +24,9 @@ jobs:
           NEXT_PUBLIC_IMAGE_BASE_URL: ${{ secrets.IMAGE_BASE_URL }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET}}
 
+      - name: "Print environment variables"
+        run: echo $NEXT_PUBLIC_API_BASE_URL
+
       - name: "install dependencies"
         run: npm ci
 
