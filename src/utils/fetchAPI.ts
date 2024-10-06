@@ -5,9 +5,9 @@ export interface RequestConfig<T> {
   method: "POST" | "GET" | "PUT" | "DELETE";
   body?: T;
   options?: HeadersInit;
+  queryParams?: Record<string, string>;
+  cache?: RequestCache;
 }
-// 겟 파라미터 처리 추가
-// 캐시관련 추가
 
 export interface ApiResponse<R> {
   data?: R | null;
@@ -20,6 +20,8 @@ export async function fetchAPI<T, R>({
   method,
   body,
   options,
+  queryParams,
+  cache = "no-store",
 }: RequestConfig<T>): Promise<ApiResponse<R>> {
   let url = process.env.BASE_URL + path;
   let token = null;
@@ -31,9 +33,14 @@ export async function fetchAPI<T, R>({
   if (session.success) {
     token = session.accessToken;
   }
-
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  // GET 요청의 파라미터 처리
+  if (method === "GET" && queryParams) {
+    const params = new URLSearchParams(queryParams).toString();
+    url += `?${params}`;
   }
 
   // 헤더 설정
@@ -49,6 +56,7 @@ export async function fetchAPI<T, R>({
     method,
     headers,
     body: body ? JSON.stringify(body) : null,
+    cache,
   });
 
   let data: R | null = null;
