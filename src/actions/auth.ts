@@ -28,14 +28,14 @@ export async function signIn(prevState: FormState, formData: FormData) {
   };
 
   const apiParams: RequestConfig<typeof body> = {
-    path: "/auth/authenticate",
+    path: "/auth/auth/authenticate",
     method: "POST",
     body: body,
   };
 
   const { data, status }: ApiResponse<AuthResponse> = await fetchAPI(apiParams);
 
-  if (status >= 400 && status < 500) {
+  if (status >= 400) {
     return { type: "fail", message: "이메일이나 비밀번호가 잘못되었습니다." };
   }
 
@@ -73,12 +73,14 @@ export async function signUp(prevState: FormState, formData: FormData) {
   };
 
   const apiParams: RequestConfig<typeof body> = {
-    path: "/auth/register",
+    path: "/auth/auth/register",
     method: "POST",
-    body: body,
+    body,
   };
 
-  const { data, status }: ApiResponse<AuthResponse> = await fetchAPI(apiParams);
+  const { data, status, message }: ApiResponse<AuthResponse> = await fetchAPI(
+    apiParams
+  );
 
   if (data) {
     const session = {
@@ -90,6 +92,8 @@ export async function signUp(prevState: FormState, formData: FormData) {
 
     redirect("/signUp/success");
   }
+
+  return { type: "fail", message };
 }
 
 export async function signOut() {
@@ -100,7 +104,7 @@ export async function signOut() {
   }
 
   const apiParams: RequestConfig<undefined> = {
-    path: "/auth/logout",
+    path: "/auth/auth/logout",
     method: "POST",
   };
 
@@ -121,7 +125,7 @@ export async function resign() {
   }
 
   const apiParams: RequestConfig<undefined> = {
-    path: "/auth/resign",
+    path: "/auth/auth/resign",
     method: "POST",
   };
 

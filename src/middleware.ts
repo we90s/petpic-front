@@ -18,12 +18,11 @@ export async function middleware(request: NextRequest) {
   const session = await decrypt(accessToken);
 
   const response = NextResponse.next();
-
-  if (isProtectedRoute && !session?.sub) {
+  if (isProtectedRoute && !accessToken) {
     return NextResponse.redirect(new URL("/signIn", request.nextUrl));
   }
 
-  if (isPublicRoute && session?.sub) {
+  if (isPublicRoute && accessToken) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
   }
 

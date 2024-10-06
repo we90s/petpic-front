@@ -32,14 +32,13 @@ export async function getAuthenticationCode(email: string) {
 export async function checkAuthenticationCode(email: string, authCode: string) {
   const body = {
     userMail: email,
-    mailType: "mail-validate",
     code: authCode,
   };
 
   const apiParams: RequestConfig<typeof body> = {
     path: "/auth/signup/validate",
     method: "POST",
-    body: body,
+    body,
   };
 
   const { status } = await fetchAPI(apiParams);

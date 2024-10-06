@@ -6,6 +6,7 @@ import styles from "@styles/page/signIn.module.css";
 import { useFormState } from "react-dom";
 import { signIn } from "@actions/auth";
 import SubmitButton from "@components/SubmitButton";
+import customToast from "@lib/customToast";
 
 export default function SignInContainer() {
   const [state, action] = useFormState(signIn, {
@@ -41,7 +42,12 @@ export default function SignInContainer() {
           아직 회원이 아니신가요?
           <Link href="signUp">회원가입</Link>
           <span>|</span>
-          <Link href="/">비밀번호 찾기</Link>
+          <Link
+            href=""
+            onClick={() => customToast(false, "현재 개발중입니다!")}
+          >
+            비밀번호 찾기
+          </Link>
         </div>
         <SubmitButton>로그인</SubmitButton>
       </form>

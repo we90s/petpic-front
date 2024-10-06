@@ -6,16 +6,13 @@ import { useInput } from "@hooks/useInput";
 import styles from "@styles/page/signUp.module.css";
 import { signUp } from "actions/auth";
 import { emailSchema } from "@lib/definitions";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { checkAuthenticationCode, getAuthenticationCode } from "@lib/auth";
-import { Toaster } from "react-hot-toast";
 import SubmitButton from "@components/SubmitButton";
 import customToast from "@lib/customToast";
 
 export default function SignUpContainer() {
-  const router = useRouter();
   const [state, action] = useFormState(signUp, {
     type: "",
     message: "",
@@ -46,10 +43,15 @@ export default function SignUpContainer() {
     }
   };
 
+  useEffect(() => {
+    if (state.type === "fail") {
+      customToast(false, "회원가입에 실패하였습니다.");
+    }
+  }, [state]);
+
   return (
     <form action={action} className={styles.form}>
       <div className={styles.emailWrapper}>
-        <Toaster />
         <Input
           id="email"
           onChange={onChangeEmail}
@@ -107,7 +109,7 @@ export default function SignUpContainer() {
         isError={state?.type === "passwordCheck"}
         errorLabel={state?.message}
       />
-      <SubmitButton disabled={isValidAuthCode !== true}>가입하기</SubmitButton>
+      <SubmitButton disabled={!isValidAuthCode === true}>가입하기</SubmitButton>
     </form>
   );
 }
