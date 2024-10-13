@@ -15,14 +15,14 @@ export async function middleware(request: NextRequest) {
   const cookie = request.cookies.get("session")?.value;
   const parsedCookie = cookie ? JSON.parse(cookie) : {};
   const { accessToken, refreshToken } = parsedCookie;
+  // 수정 예정
   const session = await decrypt(accessToken);
-
   const response = NextResponse.next();
-  if (isProtectedRoute && !accessToken) {
+  if (isProtectedRoute && !session?.sub) {
     return NextResponse.redirect(new URL("/signIn", request.nextUrl));
   }
 
-  if (isPublicRoute && accessToken) {
+  if (isPublicRoute && session?.sub) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
   }
 

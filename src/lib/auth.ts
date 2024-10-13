@@ -56,7 +56,7 @@ export async function checkAuthStatus(): Promise<AuthStatusResponse> {
   }
 
   const accessParams: RequestConfig<string> = {
-    path: "/auth/validate",
+    path: "/auth/auth/validate",
     method: "GET",
   };
 
@@ -65,11 +65,10 @@ export async function checkAuthStatus(): Promise<AuthStatusResponse> {
   );
 
   const username = accessData;
-
-  if (status >= 500) {
+  if (status >= 400) {
     let options = { Authorization: `Bearer ${session.refreshToken}` };
     const refreshParams: RequestConfig<string> = {
-      path: "/auth/refresh-token",
+      path: "/auth/auth/refresh-token",
       method: "POST",
       options,
     };
